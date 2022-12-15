@@ -1,12 +1,10 @@
-# Scheme of Pr_Filter
+# Pr_Filter方案 - GRPC交互
 
-[chinese version](https://github.com/Collins-bit/pr-filter/blob/master/README.CN.md)
+## 编译&运行
 
-## Build & Install
+### 安装环境（linux环境）
 
-### Environment ( linux )
-
-1. g++ and cmake
+1. 安装g++和cmake环境
     ```
     $ sudo apt update && sudo apt upgrade -y
 
@@ -14,13 +12,13 @@
 
     $ sudo apt install cmake
     ```
-2. CryptoPP
+2. 安装CryptoPP密码库
     ```
     $ sudo apt-get install libcrypto++-dev libcrypto++-doc libcrypto++-utils
 
     $ apt-cache pkgnames | grep -i crypto++ 
     ```
-3. grpc
+3. 安装grpc环境
     ```
     $ git clone https://github.com/grpc/grpc.git 
 
@@ -34,7 +32,7 @@
 
     $ sudo make install
     ```
-### Building
+### 编译命令
 ```
 $ mkdir build & cd build
 
@@ -42,3 +40,4 @@ $ cmake ..
 
 $ make
 ```
+其中build目录下的server为服务端，client为客户端
