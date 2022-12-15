@@ -26,6 +26,7 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 
 aux_source_directory(src/algorithm crypto_srcs)
 aux_source_directory(src/util crypto_srcs)
+aux_source_directory(src/rpc/dal crypto_srcs)
 
 add_library(pr_grpc_proto
   ${pr_grpc_srcs}

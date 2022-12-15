@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <bits/stdc++.h>
+
 using namespace std;
 
 std::string StrPaddingWithTag(std::string s, int len);

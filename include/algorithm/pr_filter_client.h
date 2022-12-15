@@ -5,8 +5,7 @@
 
 using namespace CryptoPP;
 
-typedef struct
-{
+typedef struct {
     std::string kv;
     std::string kt;
     std::string kp;
@@ -19,15 +18,13 @@ void sEMM_Setup(int lambda, std::map<std::string, cdc> MMp, std::string &mskt, s
 
 void sEMM_Token(std::string mskt, std::string w1, std::string w2, std::string &token);
 
-typedef struct
-{
+typedef struct {
     int lambda;
     int mu;
     std::map<std::string, std::vector<std::string>> MM;
 } pr_filter_setup_param;
 
-typedef struct
-{
+typedef struct {
     MK mk;
     EMM emm;
     std::map<std::string, int> DX;
@@ -35,15 +32,13 @@ typedef struct
 
 int PR_Filter_Setup(pr_filter_setup_param param, pr_filter_setup_res &res);
 
-typedef struct
-{
+typedef struct {
     MK mk;
     std::vector<std::string> words;
     int len;
 } pr_filter_token_param;
 
-typedef struct
-{
+typedef struct {
     std::string tokp;
     std::string k_w12_enc;
     std::vector<key_re_d> tokp_vec;
@@ -51,8 +46,7 @@ typedef struct
 
 int PR_Filter_Token(pr_filter_token_param param, pr_filter_token_res &res);
 
-typedef struct
-{
+typedef struct {
     std::string w1;
     std::string wn;
     MK mk;

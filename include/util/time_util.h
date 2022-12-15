@@ -2,19 +2,26 @@
 #define TIME_UTIL
 
 #include <iostream>
-#include <sys/time.h>
+#include <ctime>
+
 using namespace std;
 
-class TimeUtil
-{
+class TimeUtil {
 private:
-    struct timeval start;
+    struct timeval start{};
 public:
-    TimeUtil(){}
+    TimeUtil() {}
+
+    TimeUtil(struct timeval start) : start(start) {}
+
     struct timeval initTime();
+
     void endTime();
+
     void endTime(string msg);
+
     void endTime(struct timeval start);
+
     void endTime(struct timeval start, string msg);
 };
 

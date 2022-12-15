@@ -1,7 +1,7 @@
 #ifndef CRYPTO_UTIL
 #define CRYPTO_UTIL
 
-#include <sys/time.h>
+#include <ctime>
 #include <crypto++/aes.h>
 #include <cryptopp/filters.h>
 #include <cryptopp/modes.h>
@@ -12,18 +12,19 @@
 #include <cryptopp/base64.h>
 #include <cryptopp/files.h>
 #include <bits/stdc++.h>
+
 using namespace CryptoPP;
 
 #define AES128_KEY_LEN 16
 
 // hash函数 带盐值
-std::string H1(const std::string message, std::string key);
+std::string H1(std::string message, std::string key);
 
 // hash函数，不带盐值
-std::string H(const std::string message);
+std::string H(std::string message);
 
 // hash函数，输出Int
-int hash_k_int(const std::string message, const std::string key);
+int hash_k_int(std::string message, std::string key);
 
 // byte转Int
 int bytesToInt(byte *bytes, int size);
@@ -47,7 +48,7 @@ int gen_key(byte *key1);
 std::string Gen_RandKey(int len);
 
 // AES加密
-void encrypt(std::string key, std::string plaintext,std::string &ciphertext);
+void encrypt(std::string key, std::string plaintext, std::string &ciphertext);
 
 // AES解密
 void decrypt(std::string key, std::string ciphertext, std::string &plaintext);

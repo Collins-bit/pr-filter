@@ -7,16 +7,14 @@ using namespace CryptoPP;
 
 void sEMM_Search(std::string tokp, std::map<std::string, cdc> EMMp, std::vector<std::string> &tags);
 
-typedef struct
-{
+typedef struct {
     std::string tokp;
     std::string k_w12_enc;
     std::vector<key_re_d> tokp_vec;
     EMM emm;
 } pr_filter_search_param;
 
-typedef struct
-{
+typedef struct {
     std::vector<std::string> c;
     std::vector<std::string> dc;
     std::vector<bool> vaild;
