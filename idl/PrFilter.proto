@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package PrFilter;
+
+service PrFilterService {
+
+    // Setup Emmt
+    rpc SetupEmmt (SetupEmmtRequest) returns (SetupEmmtRespone) {}
+
+    // Setup Xset
+    rpc SetupXset (SetupXsetRequest) returns (SetupXsetRespone) {}
+
+    // Search
+    rpc Search (SearchRequest) returns (SearchRespone) {}
+}
+
+message cbc
+{
+    repeated bytes c = 1;
+    repeated bytes bc = 2;
+}
+
+message key_re_d {
+    string kx = 1;
+    repeated int32 ck = 2;
+    repeated int32 p2 = 3;
+    repeated int32 p2_plus = 4;
+    string key_phi = 5;
+    string key_phi_plus = 6;
+}
+
+message SetupEmmtRequest
+{
+    bytes key = 1;
+    cbc value = 2;
+}
+
+message SetupEmmtRespone {
+    int32  code = 1;
+}
+
+message SetupXsetRequest
+{
+    bytes xset_v = 1;
+}
+
+message SetupXsetRespone {
+    int32  code = 1;
+}
+
+message SearchRequest
+{
+    string tokp = 1;
+    string k_w12_enc = 2;
+    repeated key_re_d tokp_vec = 3;
+}
+
+message SearchRespone {
+    int32  code = 1;
+}

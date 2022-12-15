@@ -1,0 +1,5 @@
+/home/xie/experience/azi/grpc/build/CMakeFiles/rebuild_cache.dir
+/home/xie/experience/azi/grpc/build/CMakeFiles/edit_cache.dir
+/home/xie/experience/azi/grpc/build/CMakeFiles/server.dir
+/home/xie/experience/azi/grpc/build/CMakeFiles/client.dir
+/home/xie/experience/azi/grpc/build/CMakeFiles/pr_grpc_proto.dir
