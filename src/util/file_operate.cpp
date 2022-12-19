@@ -16,6 +16,7 @@ void Get_MM_from_fpath(std::string path, std::map<std::string, std::vector<std::
         }
         MM[w] = ids;
     }
+    std::cout << "read MM from file success!" << std::endl;
 }
 
 std::string StrPaddingWithTag(std::string s, int len) {
@@ -64,9 +65,9 @@ int Deal_mm_same_length(int max_mm_len, std::map<std::string, std::vector<std::s
         MM[mm.first] = tmp;
     }
     if (flag) {
-        std::cout << "not processed" << std::endl;
+        std::cout << "no set MM length." << std::endl;
     } else {
-        std::cout << "processed success" << std::endl;
+        std::cout << "set MM length to be same success!" << std::endl;
     }
     return 0;
 }

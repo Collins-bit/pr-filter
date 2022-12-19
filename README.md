@@ -1,6 +1,6 @@
 # Scheme of Pr_Filter
 
-[chinese version](https://github.com/Collins-bit/pr-filter/blob/master/README.CN.md)
+[chinese version](./README.CN.md)
 
 ## Build & Install
 

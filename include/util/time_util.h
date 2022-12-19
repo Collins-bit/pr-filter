@@ -2,7 +2,7 @@
 #define TIME_UTIL
 
 #include <iostream>
-#include <ctime>
+#include <sys/time.h>
 
 using namespace std;
 

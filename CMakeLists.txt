@@ -21,6 +21,8 @@ add_custom_command(
         "${pr_proto}"
       DEPENDS "${pr_proto}")
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/binary)
+
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
@@ -45,5 +47,6 @@ foreach(_target client server)
     pr_grpc_proto
     ${_REFLECTION}
     ${_GRPC_GRPCPP}
-    ${_PROTOBUF_LIBPROTOBUF})
+    ${_PROTOBUF_LIBPROTOBUF}
+    -lcryptopp -O3)
 endforeach()

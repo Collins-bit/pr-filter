@@ -8,25 +8,41 @@
 #include <grpcpp/grpcpp.h>
 #include "PrFilter.grpc.pb.h"
 
+#include <algorithm/pr_filter_client.h>
+#include <util/file_operate.h>
+#include <util/time_util.h>
+
 using grpc::Channel;
 using grpc::ClientContext;
 using grpc::Status;
 using PrFilter::PrFilterService;
 using PrFilter::SetupEmmtRequest;
-using PrFilter::SetupEmmtRespone;
 using PrFilter::SetupXsetRequest;
-using PrFilter::SetupXsetRespone;
 using PrFilter::SearchRequest;
-using PrFilter::SearchRespone;
+using PrFilter::SearchResponse;
 
 class PrFilterClient {
 public:
     PrFilterClient(std::shared_ptr<Channel> channel) : stub_(PrFilterService::NewStub(channel)) {}
 
-    std::string SayHello();
+    int SendEmmt(const std::map<std::string, cdc> &EMMt);
+
+    int SendXset(const std::multiset<std::string> &Xset);
+
+    int SearchInServer(pr_filter_token_res token_res, std::vector<std::string> &c, std::vector<std::string> &dc, std::vector<bool> &vaild);
 
 private:
     std::unique_ptr<PrFilterService::Stub> stub_;
 };
+
+int setup(PrFilterClient &client, std::vector<std::string> command, int &mm_len,
+          pr_filter_setup_param &setup_param, pr_filter_setup_res &setup_res);
+
+int token(PrFilterClient &client, std::vector<std::string> command, int mm_len, MK mk,
+          pr_filter_token_param &token_param, pr_filter_token_res &token_res);
+
+int resolve(PrFilterClient &client, std::vector<std::string> command,
+            pr_filter_setup_res setup_res, pr_filter_token_res token_res, std::vector<std::string> words,
+            pr_filter_resolve_param &resolve_param);
 
 #endif //PRFILTER_CLIENT_H

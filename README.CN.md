@@ -1,4 +1,4 @@
-# Pr_Filter方案 - GRPC交互
+# Pr_Filter方案
 
 ## 编译&运行
 
@@ -27,7 +27,7 @@
     $ mkdir build && cd build
 
     $ cmake ..
-
+   
     $ make -j
 
     $ sudo make install
@@ -40,4 +40,33 @@ $ cmake ..
 
 $ make
 ```
-其中build目录下的server为服务端，client为客户端
+其中当前binary目录下的server为服务端，client为客户端
+
+## 运行命令
+
+### 服务端
+```
+$ ./server
+```
+
+### 客户端
+```
+$ ./client
+```
+
+client下可执行命令包括：setup、token、resolve和stop
+```
+# setup: 初始化EMMt和Xset表
+$ setup -f ${file-path} -k ${key-lenght}
+$ setup -fpath ${file-path} -keylen ${key-lenght}
+
+# token: 生成token
+$ token -w ${word1} ${word2} ...
+$ token -word ${word1} ${word2} ...
+
+# resolve: 在服务端搜索并求解
+$ resolve
+```
+- file-path 并查集文件路径（相对于client）
+- key-lenght 密钥长度（整数）
+- wordn 若干个关键字

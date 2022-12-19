@@ -44,17 +44,6 @@ byte *IntToBytes(int num) {
     return ans;
 }
 
-// 整数转二进制
-std::string toBinary(int n) {
-    std::string r;
-    while (n != 0) {
-        r += (n % 2 == 0 ? "0" : "1");
-        n /= 2;
-    }
-    reverse(r.begin(), r.end());
-    return r;
-}
-
 // 填充算法: 后面填0
 std::string padding(std::string s, int len) {
     std::string r;
@@ -70,10 +59,10 @@ std::string padding(std::string s, int len) {
 
 // string 异或
 std::string Xor(std::string s1, std::string s2) {
-    if (s1.length() != s2.length()) {
-        std::cout << "[Warning] [Xor] not sufficient size, s1 lenght: " << s1.length() << ", s2 lenght: " << s2.length()
-                  << std::endl;
-    }
+//    if (s1.length() != s2.length()) {
+//        std::cout << "[Warning] [Xor] not sufficient size, s1 lenght: " << s1.length() << ", s2 lenght: " << s2.length()
+//                  << std::endl;
+//    }
     if (s1.length() < s2.length()) {
         std::string tmp = s1;
         s1 = s2;
@@ -84,16 +73,6 @@ std::string Xor(std::string s1, std::string s2) {
         ans[i] = ans[i] ^ s2[i];
     }
     return ans;
-}
-
-// 产生随机数密钥串，类型为byte
-int gen_key(byte *key1) {
-    // 产生一个随机数密钥串，长度为16字节
-    AutoSeededRandomPool rand;
-    SecByteBlock Key(0x00, AES::DEFAULT_KEYLENGTH);
-    rand.GenerateBlock(Key, Key.size());
-    key1 = Key;
-    return 1;
 }
 
 // 产生随机数密钥串，类型为string

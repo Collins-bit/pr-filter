@@ -78,7 +78,7 @@ int Permutationkey_Gen(std::string key, int n, std::vector<int> &ret) {
     }
     unsigned int tmp, tempo;
     for (int i = 0; i < n; i++) {
-        std::string iTostr = toBinary(i);
+        std::string iTostr = std::to_string(i);
         tmp = hash_k_int(iTostr, key);
         tmp = tmp % n;
         tempo = ret[tmp];
@@ -296,7 +296,8 @@ int Pr_ReEnc(std::vector<int> CK3, std::vector<std::vector<int>> P2, std::vector
              std::vector<std::string> c, std::vector<std::string> dc,
              std::vector<std::string> &cplus, std::vector<std::string> &dcplus) {
     if (P2.size() != 2 || KeyPhi.size() != 2) {
-        std::cout << "[Pr_ReEnc] wrong output, the lenght of P2 should be 2, KeyPhi should be 2 " << std::endl;
+        std::cout << "[Pr_ReEnc] wrong output, the lenght of P2 should be 2, KeyPhi should be 2, P2 size: " << P2.size()
+                  << ", KeyPhi size: " << KeyPhi.size() << std::endl;
         return -1;
     }
     if (c.size() != cplus.size() || dc.size() != dcplus.size() || c.size() != dc.size()) {

@@ -32,17 +32,11 @@ int bytesToInt(byte *bytes, int size);
 // Int转byte
 byte *IntToBytes(int num);
 
-// 整数转二进制
-std::string toBinary(int n);
-
 // 填充算法: 后面填0
 std::string padding(std::string s, int len);
 
 // string 异或
 std::string Xor(std::string s1, std::string s2);
-
-// 产生随机数密钥串，类型为byte
-int gen_key(byte *key1);
 
 // 产生随机数密钥串，类型为string
 std::string Gen_RandKey(int len);
