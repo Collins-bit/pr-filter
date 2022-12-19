@@ -50,7 +50,6 @@ The server and client are in binary folder.
 ```
 $ ./server
 ```
-
 ### running client
 ```
 $ ./client

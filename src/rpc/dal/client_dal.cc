@@ -13,7 +13,7 @@ int setup(PrFilterClient &client, std::vector<std::string> command, int &mm_len,
         } else if ((command[i] == "-keylen" || command[i] == "-k") && i + 1 < command.size()) {
             keylen = stoi(command[i + 1]);
         } else {
-            std::cout << "wrong command!" << std::endl;
+            std::cout << "[setup] wrong command!" << std::endl;
             return -1;
         }
     }
@@ -29,13 +29,16 @@ int setup(PrFilterClient &client, std::vector<std::string> command, int &mm_len,
     setup_param.mu = keylen * 2;
     // call PR_Filter_Setup
     if (PR_Filter_Setup(setup_param, setup_res) != 0) {
+        std::cout << "[setup] call PR_Filter_Setup failed!" << std::endl;
         return -2;
     }
     // send to server
     if (client.SendEmmt(setup_res.emm.EMMt) != 0) {
+        std::cout << "[setup] send emmt to server failed!" << std::endl;
         return -3;
     }
     if (client.SendXset(setup_res.emm.Xset) != 0) {
+        std::cout << "[setup] send xset to server failed!" << std::endl;
         return -3;
     }
     return 0;
@@ -51,29 +54,30 @@ int token(PrFilterClient &client, std::vector<std::string> command, int mm_len, 
                 words.push_back(command[i++]);
             }
         } else {
-            std::cout << "wrong command!" << std::endl;
+            std::cout << "[token] wrong command!" << std::endl;
             return -1;
         }
     }
     token_param.len = mm_len;
-    token_param.mk = mk;
+    token_param.mk = std::move(mk);
     token_param.words = words;
+    token_res.tokp_vec.clear();
     if (PR_Filter_Token(token_param, token_res) != 0) {
+        std::cout << "[token] call PR_Filter_Token failed!" << std::endl;
         return -2;
     }
     return 0;
 }
 
-int resolve(PrFilterClient &client, std::vector<std::string> command,
-            pr_filter_setup_res setup_res, pr_filter_token_res token_res, std::vector<std::string> words,
-            pr_filter_resolve_param &resolve_param) {
+int resolve(PrFilterClient &client, const pr_filter_setup_res& setup_res, pr_filter_token_res token_res,
+            std::vector<std::string> words, pr_filter_resolve_param &resolve_param) {
     // call PR_Filter_Search
     std::vector<std::string> c;
     std::vector<std::string> dc;
     std::vector<bool> vaild;
-    client.SearchInServer(token_res, c, dc, vaild);
+    client.SearchInServer(std::move(token_res), c, dc, vaild);
     if (words.size() < 2) {
-        std::cout << "you should token first!" << std::endl;
+        std::cout << "[resolve] you should token first!" << std::endl;
         return -1;
     }
 
@@ -86,7 +90,10 @@ int resolve(PrFilterClient &client, std::vector<std::string> command,
     resolve_param.vaild = vaild;
     resolve_param.DX = setup_res.DX;
     std::vector<std::string> resolve_res;
-    PR_Filter_Resolve(resolve_param, resolve_res);
+    if (PR_Filter_Resolve(resolve_param, resolve_res) != 0) {
+        std::cout << "[resolve] call PR_Filter_Resolve failed!" << std::endl;
+        return -2;
+    }
 
     StrVecRemoveTag(resolve_res);
     std::cout << "resolve result: ";
@@ -123,7 +130,7 @@ int PrFilterClient::SendEmmt(const std::map<std::string, cdc> &EMMt) {
     if (status.ok()) {
         return 0;
     } else {
-        std::cout << "send emmt failed: " << status.error_code() << ": " << status.error_message() << std::endl;
+        std::cout << "send emmt failed: " << status.error_code() << ", result: " << status.error_message() << std::endl;
         return -1;
     }
 }
@@ -146,7 +153,7 @@ int PrFilterClient::SendXset(const std::multiset<std::string> &Xset) {
     if (status.ok()) {
         return 0;
     } else {
-        std::cout << "send xset failed: " << status.error_code() << ": " << status.error_message() << std::endl;
+        std::cout << "send xset failed: " << status.error_code() << ", result: " << status.error_message() << std::endl;
         return -1;
     }
 }
@@ -176,7 +183,7 @@ int PrFilterClient::SearchInServer(pr_filter_token_res token_res, std::vector<st
     Status status = stub_->Search(&context, request, &response);
 
     if (!status.ok()) {
-        std::cout << "search failed: " << status.error_code() << ": " << status.error_message() << std::endl;
+        std::cout << "search failed: " << status.error_code() << ", result: " << status.error_message() << std::endl;
         return -1;
     }
     for (const auto &c_val: response.c()) {

@@ -41,8 +41,7 @@ int setup(PrFilterClient &client, std::vector<std::string> command, int &mm_len,
 int token(PrFilterClient &client, std::vector<std::string> command, int mm_len, MK mk,
           pr_filter_token_param &token_param, pr_filter_token_res &token_res);
 
-int resolve(PrFilterClient &client, std::vector<std::string> command,
-            pr_filter_setup_res setup_res, pr_filter_token_res token_res, std::vector<std::string> words,
-            pr_filter_resolve_param &resolve_param);
+int resolve(PrFilterClient &client, const pr_filter_setup_res& setup_res, pr_filter_token_res token_res,
+            std::vector<std::string> words, pr_filter_resolve_param &resolve_param);
 
 #endif //PRFILTER_CLIENT_H
