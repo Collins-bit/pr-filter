@@ -4,9 +4,9 @@
 
 ## Build & Install
 
-### Environment ( linux )
+### Running Environment ( linux )
 
-1. g++ and cmake
+1. init g++ and cmake
     ```
     $ sudo apt update && sudo apt upgrade -y
 
@@ -14,13 +14,13 @@
 
     $ sudo apt install cmake
     ```
-2. CryptoPP
+2. init CryptoPP
     ```
     $ sudo apt-get install libcrypto++-dev libcrypto++-doc libcrypto++-utils
 
     $ apt-cache pkgnames | grep -i crypto++ 
     ```
-3. grpc
+3. init grpc
     ```
     $ git clone https://github.com/grpc/grpc.git 
 
@@ -42,3 +42,33 @@ $ cmake ..
 
 $ make
 ```
+The server and client are in binary folder.
+
+## Running Command
+
+### running server
+```
+$ ./server
+```
+
+### running client
+```
+$ ./client
+```
+
+The client contains the following commands：setup, token, resolve and stop.
+```
+# setup: init EMMt and Xset
+$ setup -f ${file-path} -k ${key-lenght}
+$ setup -fpath ${file-path} -keylen ${key-lenght}
+
+# token: generate token
+$ token -w ${word1} ${word2} ... ${wordn}
+$ token -word ${word1} ${word2} ... ${wordn}
+
+# resolve: search in server and resolve
+$ resolve
+```
+- file-path: union file path (relative to client).
+- key-length: the length of key (integer).
+- wordn: several words.
