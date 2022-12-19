@@ -6,7 +6,7 @@ using namespace CryptoPP;
 std::string H1(std::string message, std::string key) {
     byte buf[SHA256::DIGESTSIZE];
     std::string salt = key;
-    SHA256().CalculateDigest(buf, (byte *) ((message + salt).c_str()), message.length() + salt.length());
+    SHA256().CalculateDigest(buf, (byte *) ((message + salt).c_str()), message.size() + salt.size());
     return std::string((const char *) buf, (size_t) SHA256::DIGESTSIZE);
 }
 
@@ -14,14 +14,14 @@ std::string H1(std::string message, std::string key) {
 std::string H(std::string message) {
     byte buf[SHA256::DIGESTSIZE];
     std::string salt = "01";
-    SHA256().CalculateDigest(buf, (byte *) ((message + salt).c_str()), message.length() + salt.length());
+    SHA256().CalculateDigest(buf, (byte *) ((message + salt).c_str()), message.size() + salt.size());
     return std::string((const char *) buf, (size_t) SHA256::DIGESTSIZE);
 }
 
 // hash函数，输出Int
 int hash_k_int(std::string message, std::string key) {
     byte buf[SHA256::DIGESTSIZE];
-    SHA256().CalculateDigest(buf, (byte *) ((message + key).c_str()), message.length() + key.length());
+    SHA256().CalculateDigest(buf, (byte *) ((message + key).c_str()), message.size() + key.size());
     return bytesToInt(buf, 4);
 }
 
@@ -59,17 +59,17 @@ std::string padding(std::string s, int len) {
 
 // string 异或
 std::string Xor(std::string s1, std::string s2) {
-//    if (s1.length() != s2.length()) {
-//        std::cout << "[Warning] [Xor] not sufficient size, s1 lenght: " << s1.length() << ", s2 lenght: " << s2.length()
+//    if (s1.size() != s2.size()) {
+//        std::cout << "[Warning] [Xor] not sufficient size, s1 lenght: " << s1.size() << ", s2 lenght: " << s2.size()
 //                  << std::endl;
 //    }
-    if (s1.length() < s2.length()) {
+    if (s1.size() < s2.size()) {
         std::string tmp = s1;
         s1 = s2;
         s2 = tmp;
     }
     std::string ans = s1;
-    for (int i = 0; i < s2.length(); i++) {
+    for (int i = 0; i < s2.size(); i++) {
         ans[i] = ans[i] ^ s2[i];
     }
     return ans;
@@ -99,9 +99,9 @@ void encrypt(std::string key, std::string plaintext, std::string &ciphertext) {
         byte iv_s[17] = "0123456789abcdef";
         CFB_Mode<AES>::Encryption e;
         e.SetKeyWithIV((byte *) key.c_str(), AES128_KEY_LEN, iv_s, (size_t) AES::BLOCKSIZE);
-        byte tmp_new_st[plaintext.length()];
-        e.ProcessData(tmp_new_st, (byte *) plaintext.c_str(), plaintext.length());
-        ciphertext = std::string((const char *) tmp_new_st, plaintext.length());
+        byte tmp_new_st[plaintext.size()];
+        e.ProcessData(tmp_new_st, (byte *) plaintext.c_str(), plaintext.size());
+        ciphertext = std::string((const char *) tmp_new_st, plaintext.size());
     }
     catch (const CryptoPP::Exception &e) {
         std::cerr << "encrypt wrong: " << e.what() << std::endl;
@@ -116,9 +116,9 @@ void decrypt(std::string key, std::string ciphertext, std::string &plaintext) {
         byte iv_s[17] = "0123456789abcdef";
         CFB_Mode<AES>::Decryption d;
         d.SetKeyWithIV((byte *) key.c_str(), AES128_KEY_LEN, iv_s, (size_t) AES::BLOCKSIZE);
-        byte tmp_new_st[ciphertext.length()];
-        d.ProcessData(tmp_new_st, (byte *) ciphertext.c_str(), ciphertext.length());
-        plaintext = std::string((const char *) tmp_new_st, ciphertext.length());
+        byte tmp_new_st[ciphertext.size()];
+        d.ProcessData(tmp_new_st, (byte *) ciphertext.c_str(), ciphertext.size());
+        plaintext = std::string((const char *) tmp_new_st, ciphertext.size());
     }
     catch (const CryptoPP::Exception &e) {
         std::cerr << "decrypt wrong: " << e.what() << std::endl;

@@ -34,7 +34,7 @@
     ```
 ### 编译命令
 ```
-$ mkdir build & cd build
+$ mkdir build && cd build
 
 $ cmake ..
 
@@ -69,4 +69,4 @@ $ resolve
 ```
 - file-path 并集文件路径（相对于client）
 - key-lenght 密钥长度（整数）
-- wordn 若干个关键字
+- wordn 若干个关键字(多于两个)

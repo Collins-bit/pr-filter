@@ -107,20 +107,20 @@ int AONTH(int ctr, std::string m, std::string &mplus, std::string &dmplus) {
     std::string pad_ctr = padding(ctrPlus, m_size);
     std::string xor_param = H(Xor(dmplus, pad_ctr)).substr(0, m_size);
     mplus = Xor(x, xor_param);
-    if (m.length() != mplus.length()) {
-        std::cout << "[AONTH] m size is not equal to mplus: " << m.length() << "," << mplus.size() << std::endl;
+    if (m.size() != mplus.size()) {
+        std::cout << "[AONTH] m size is not equal to mplus: " << m.size() << "," << mplus.size() << std::endl;
         return -1;
     }
-    if (m.length() != dmplus.length()) {
-        std::cout << "[AONTH] m size is not equal to dmplus: " << m.length() << "," << dmplus.size() << std::endl;
+    if (m.size() != dmplus.size()) {
+        std::cout << "[AONTH] m size is not equal to dmplus: " << m.size() << "," << dmplus.size() << std::endl;
         return -1;
     }
     return 0;
 }
 
 int D_AONTH(int ctr, std::string mplus, std::string dmplus, std::string &m) {
-    if (mplus.length() != dmplus.length()) {
-        std::cout << "[D_AONTH] mplus size is not equal to dmplus: " << mplus.length() << "," << dmplus.size()
+    if (mplus.size() != dmplus.size()) {
+        std::cout << "[D_AONTH] mplus size is not equal to dmplus: " << mplus.size() << "," << dmplus.size()
                   << std::endl;
         return -1;
     }
@@ -138,8 +138,8 @@ int D_AONTH(int ctr, std::string mplus, std::string dmplus, std::string &m) {
     // m = x ^ Hash(ctr+1, k')
     std::string digest = H1(ctrPlus, keyp).substr(0, m_size);
     m = Xor(x, digest);
-    if (m.length() != mplus.length()) {
-        std::cout << "[D_AONTH] m size is not right: " << m.length() << "," << mplus.size() << std::endl;
+    if (m.size() != mplus.size()) {
+        std::cout << "[D_AONTH] m size is not right: " << m.size() << "," << mplus.size() << std::endl;
         return -1;
     }
     return 0;

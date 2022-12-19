@@ -21,7 +21,7 @@ void Get_MM_from_fpath(std::string path, std::map<std::string, std::vector<std::
 
 std::string StrPaddingWithTag(std::string s, int len) {
     std::string r = s;
-    if (s.length() < len) {
+    if (s.size() < len) {
         int count = len - s.size();
         std::string pad(count, '#');
         r += pad;

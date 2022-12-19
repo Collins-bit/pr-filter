@@ -70,4 +70,4 @@ $ resolve
 ```
 - file-path: union file path (relative to client).
 - key-length: the length of key (integer).
-- wordn: several words.
+- wordn: several words (more than two).

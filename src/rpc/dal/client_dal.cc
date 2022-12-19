@@ -58,6 +58,10 @@ int token(PrFilterClient &client, std::vector<std::string> command, int mm_len, 
             return -1;
         }
     }
+    if(words.size()<2){
+        std::cout << "[token] you should enter more than two words!" << std::endl;
+        return -1;
+    }
     token_param.len = mm_len;
     token_param.mk = std::move(mk);
     token_param.words = words;
