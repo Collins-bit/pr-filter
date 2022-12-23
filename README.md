@@ -4,7 +4,7 @@
 
 ## Build & Install
 
-### Running Environment ( linux )
+### Execution Environment ( linux )
 
 1. init g++ and cmake
     ```

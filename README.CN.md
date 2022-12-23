@@ -1,5 +1,9 @@
 # Pr_Filter方案
 
+## 说明
+
+
+
 ## 编译&安装
 
 ### 安装环境（linux环境）
@@ -69,4 +73,4 @@ $ resolve
 ```
 - file-path 并集文件路径（相对于client）
 - key-lenght 密钥长度（整数）
-- wordn 若干个关键字(多于两个)
+- wordn 若干个关键字(需多于两个)
