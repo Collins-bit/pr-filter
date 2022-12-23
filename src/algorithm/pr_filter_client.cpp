@@ -111,8 +111,8 @@ int PR_Filter_Token(pr_filter_token_param param, pr_filter_token_res &res) {
 }
 
 int PR_Filter_Resolve(pr_filter_resolve_param param, std::vector<std::string> &res) {
-    if (param.c.size() != param.vaild.size() || param.c.size() != param.dc.size()) {
-        std::cout << "[PR_Filter_Resolve] vaild size wrong: " << param.vaild.size() << std::endl;
+    if (param.c.size() != param.dc.size()) {
+        std::cout << "[PR_Filter_Resolve] c and dc size wrong: " << param.c.size() << std::endl;
         return -1;
     }
     // v1..vs=PR.Dec(kv, kt, kxor, w1, wn, c0..cs)
@@ -127,11 +127,9 @@ int PR_Filter_Resolve(pr_filter_resolve_param param, std::vector<std::string> &r
         std::cout << "[PR_Filter_Resolve] call Pr_Dec failed" << std::endl;
         return -1;
     }
-    // get vaild value
+    // get result
     for (int i = 0; i < s; i++) {
-        if (param.vaild[i]) {
-            res.push_back(v[i]);
-        }
+        res.push_back(v[i]);
     }
     // done
     return 0;

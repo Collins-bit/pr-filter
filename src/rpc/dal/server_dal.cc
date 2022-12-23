@@ -88,9 +88,6 @@ Status PrFilterServiceImpl::Search(ServerContext *context,
     for (auto &dc: search_res.dc) {
         searchResponse->add_dc(dc);
     }
-    for (auto v: search_res.vaild) {
-        searchResponse->add_vaild(v);
-    }
     return Status::OK;
 }
 

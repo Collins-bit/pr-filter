@@ -17,7 +17,6 @@ typedef struct {
 typedef struct {
     std::vector<std::string> c;
     std::vector<std::string> dc;
-    std::vector<bool> vaild;
 } pr_filter_search_res;
 
 int PR_Filter_Search(pr_filter_search_param param, pr_filter_search_res &res);

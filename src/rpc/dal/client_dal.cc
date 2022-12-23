@@ -91,7 +91,6 @@ int resolve(PrFilterClient &client, const pr_filter_setup_res& setup_res, pr_fil
     resolve_param.mk = setup_res.mk;
     resolve_param.c = c;
     resolve_param.dc = dc;
-    resolve_param.vaild = vaild;
     resolve_param.DX = setup_res.DX;
     std::vector<std::string> resolve_res;
     if (PR_Filter_Resolve(resolve_param, resolve_res) != 0) {
@@ -195,9 +194,6 @@ int PrFilterClient::SearchInServer(pr_filter_token_res token_res, std::vector<st
     }
     for (const auto &dc_val: response.dc()) {
         dc.push_back(dc_val);
-    }
-    for (const auto &vaild_val: response.vaild()) {
-        vaild.push_back(vaild_val);
     }
     return 0;
 }

@@ -21,32 +21,36 @@ int PR_Filter_Search(pr_filter_search_param param, pr_filter_search_res &res) {
     // cl = PR.ReEnc(k_re_d, cl)
     // dtage(l,d) = F(kx, cl')
     int s = c.size();
-    std::vector<bool> vaild(s, true);
     std::vector<std::string> cplus(s);
     std::vector<std::string> dcplus(s);
     std::string dtag1, dtag2;
     for (int i = 0; i < param.tokp_vec.size(); i++) {
+        if (s == 0) {
+            break;
+        }
         if (Pr_ReEnc(param.tokp_vec[i].CK, param.tokp_vec[i].P2, param.tokp_vec[i].KeyPhi, c, dc, cplus, dcplus) != 0) {
             std::cout << "[PR_Filter_Search] call Pr_ReEnc failed" << std::endl;
             return -1;
         }
         for (int j = 0; j < s; j++) {
-            c[j] = cplus[j];
-            dc[j] = dcplus[j];
-        }
-        for (int j = 0; j < s; j++) {
-            if (!vaild[j])
-                continue;
             dtag1 = H1(param.tokp_vec[i].kx, cplus[j]);
             dtag2 = H1(param.tokp_vec[i].kx, dcplus[j]);
             if (param.emm.Xset.find(dtag1 + dtag2) == param.emm.Xset.end()) {
-                vaild[j] = false;
+                cplus.erase(cplus.begin() + j);
+                dcplus.erase(dcplus.begin() + j);
+                c.pop_back();
+                dc.pop_back();
+                --j;
+                --s;
             }
+        }
+        for (int j = 0; j < s; j++) {
+            c[j] = cplus[j];
+            dc[j] = dcplus[j];
         }
     }
     res.c = cplus;
     res.dc = dcplus;
-    res.vaild = vaild;
     // done
     return 0;
 }

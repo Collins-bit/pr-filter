@@ -52,7 +52,6 @@ typedef struct {
     MK mk;
     std::vector<std::string> c;
     std::vector<std::string> dc;
-    std::vector<bool> vaild;
     std::map<std::string, int> DX;
 } pr_filter_resolve_param;
 
