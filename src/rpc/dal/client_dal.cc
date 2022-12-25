@@ -28,10 +28,15 @@ int setup(PrFilterClient &client, std::vector<std::string> command, int &mm_len,
     setup_param.lambda = keylen;
     setup_param.mu = keylen * 2;
     // call PR_Filter_Setup
+    TimeUtil time_util;
+    time_util.initTime();
     if (PR_Filter_Setup(setup_param, setup_res) != 0) {
         std::cout << "[setup] call PR_Filter_Setup failed!" << std::endl;
         return -2;
     }
+    time_util.endTime("setup process");
+    emmtChange2File(setup_res.emm.EMMt, "./emmt.txt");
+    xsetChange2File(setup_res.emm.Xset, "./xset.txt");
     // send to server
     if (client.SendEmmt(setup_res.emm.EMMt) != 0) {
         std::cout << "[setup] send emmt to server failed!" << std::endl;
@@ -70,6 +75,7 @@ int token(PrFilterClient &client, std::vector<std::string> command, int mm_len, 
         std::cout << "[token] call PR_Filter_Token failed!" << std::endl;
         return -2;
     }
+    tokenChange2File(token_res, "./token.txt");
     return 0;
 }
 

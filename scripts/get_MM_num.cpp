@@ -25,6 +25,10 @@ int get_MM_from_inverted_file(const std::string &path, std::map<std::string, std
 void convert_union_file(int num, std::map<std::string,
         std::vector<std::string>> MM, const std::string &ofpath) {
     std::ofstream os(ofpath, std::ios::app);
+    if (!os) {
+        cout << "ofstream file failed!" << endl;
+        exit(1);
+    }
     for (auto mm: MM) {
         if (num <= 0) break;
         os << mm.first << " ";
@@ -50,7 +54,7 @@ int main(int argc, char *argv[]) {
     if (argc == 4) {
         std::string mm_num_str = &argv[2][0];
         int mm_num = std::stoi(mm_num_str);
-        if(mm_num>sum){
+        if (mm_num > sum) {
             cout << "input num too large! failed!" << endl;
             return 0;
         }

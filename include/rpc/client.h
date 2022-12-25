@@ -11,6 +11,7 @@
 #include <algorithm/pr_filter_client.h>
 #include <util/file_operate.h>
 #include <util/time_util.h>
+#include <util/storage_overhead.h>
 
 using grpc::Channel;
 using grpc::ClientContext;
