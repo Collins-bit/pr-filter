@@ -39,7 +39,7 @@ add_library(pr_grpc_proto
 target_link_libraries(pr_grpc_proto
   ${_REFLECTION}
   ${_GRPC_GRPCPP}
-  ${_PROTOBUF_LIBPROTOBUF})
+  ${_PROTOBUF_LIBPROTOBUF} -O3)
 
 foreach(_target client server)
   add_executable(${_target} "./src/rpc/${_target}.cc")

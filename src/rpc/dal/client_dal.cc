@@ -1,9 +1,12 @@
 #include <rpc/client.h>
-
 #include <utility>
 
 int setup(PrFilterClient &client, std::vector<std::string> command, int &mm_len,
           pr_filter_setup_param &setup_param, pr_filter_setup_res &setup_res) {
+    // clear EMM and DX
+    setup_res.emm.EMMt.clear();
+    setup_res.emm.Xset.clear();
+    setup_res.DX.clear();
     // get from command
     std::string fpath = "../testData/test_MM.txt";
     int keylen = 5;
