@@ -9,7 +9,7 @@ int setup(PrFilterClient &client, std::vector<std::string> command, int &mm_len,
     setup_res.DX.clear();
     // get from command
     std::string fpath = "../testData/test_MM.txt";
-    int keylen = 5;
+    int keylen = 32;
     for (int i = 1; i < command.size(); i += 2) {
         if ((command[i] == "-fpath" || command[i] == "-f") && i + 1 < command.size()) {
             fpath = command[i + 1];
@@ -29,7 +29,7 @@ int setup(PrFilterClient &client, std::vector<std::string> command, int &mm_len,
     // init setup_param
     setup_param.MM = MM;
     setup_param.lambda = keylen;
-    setup_param.mu = keylen * 2;
+    setup_param.mu = keylen;
     // call PR_Filter_Setup
     TimeUtil time_util;
     time_util.initTime();

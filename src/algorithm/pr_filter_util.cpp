@@ -145,7 +145,7 @@ int D_AONTH(int ctr, std::string mplus, std::string dmplus, std::string &m) {
     return 0;
 }
 
-int Pr_Gen(std::vector<std::string> key, std::vector<std::string> w, int len, int doc,
+int Pr_Gen(std::vector<std::string> &key, std::vector<std::string> &w, int len, int doc,
            std::vector<int> &P1, std::vector<int> &P2, std::vector<int> &P3, std::string &keyphi) {
     if (key.size() != 3 || w.size() != 2) {
         std::cout << "[Pr_Gen] wrong input, the lenght of key should be 3 and w should be 2" << std::endl;
@@ -166,8 +166,8 @@ int Pr_Gen(std::vector<std::string> key, std::vector<std::string> w, int len, in
     return 0;
 }
 
-int Pr_Enc(std::vector<std::string> key, std::vector<std::string> w, std::vector<std::string> m, int len,
-           std::map<std::string, int> ZX,
+int Pr_Enc(std::vector<std::string> &key, std::vector<std::string> &w, std::vector<std::string> &m, int len,
+           std::map<std::string, int> &ZX,
            std::vector<std::string> &c, std::vector<std::string> &dc, std::map<std::string, int> &DX) {
     if (m.size() == 0) {
         return 0;
@@ -209,9 +209,9 @@ int Pr_Enc(std::vector<std::string> key, std::vector<std::string> w, std::vector
     return 0;
 }
 
-int Pr_Dec(std::vector<std::string> key, std::vector<std::string> w, std::vector<std::string> c,
-           std::vector<std::string> dc,
-           int len, std::map<std::string, int> DX, std::vector<std::string> &m) {
+int Pr_Dec(std::vector<std::string> &key, std::vector<std::string> &w, std::vector<std::string> &c,
+           std::vector<std::string> &dc,
+           int len, std::map<std::string, int> &DX, std::vector<std::string> &m) {
     if (c.size() == 0 && dc.size() == 0) {
         return 0;
     }
@@ -250,7 +250,7 @@ int Pr_Dec(std::vector<std::string> key, std::vector<std::string> w, std::vector
     return 0;
 }
 
-int Pr_ReGen(std::vector<std::string> key, std::vector<std::string> w, int len,
+int Pr_ReGen(std::vector<std::string> &key, std::vector<std::string> &w, int len,
              std::vector<int> &RetCK3, std::vector<std::vector<int>> &RetP2, std::vector<std::string> &RetKeyPhi) {
     if (key.size() != 3 || w.size() != 3) {
         std::cout << "[Pr_ReGen] wrong input, the lenght of key should be 3 and w should be 3" << std::endl;
@@ -292,8 +292,8 @@ int Pr_ReGen(std::vector<std::string> key, std::vector<std::string> w, int len,
     return 0;
 }
 
-int Pr_ReEnc(std::vector<int> CK3, std::vector<std::vector<int>> P2, std::vector<std::string> KeyPhi,
-             std::vector<std::string> c, std::vector<std::string> dc,
+int Pr_ReEnc(std::vector<int> &CK3, std::vector<std::vector<int>> &P2, std::vector<std::string> &KeyPhi,
+             std::vector<std::string> &c, std::vector<std::string> &dc,
              std::vector<std::string> &cplus, std::vector<std::string> &dcplus) {
     if (P2.size() != 2 || KeyPhi.size() != 2) {
         std::cout << "[Pr_ReEnc] wrong output, the lenght of P2 should be 2, KeyPhi should be 2, P2 size: " << P2.size()
