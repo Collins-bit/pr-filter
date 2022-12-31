@@ -20,7 +20,7 @@ std::vector<int> intChangeToVec(google::protobuf::RepeatedField<int32_t> value) 
 }
 
 Status PrFilterServiceImpl::SetupEmmt(ServerContext *context,
-                                      ServerReader<SetupEmmtRequest> *reader, google::protobuf::Empty*) {
+                                      ServerReader<SetupEmmtRequest> *reader, google::protobuf::Empty *) {
     // clear map
     EMMt.clear();
     // init EMMT
@@ -31,12 +31,12 @@ Status PrFilterServiceImpl::SetupEmmt(ServerContext *context,
         std::vector<std::string> dc_vec = strChangeToVec(emmt.value().dc());
         EMMt[key] = cdc(c_vec, dc_vec);
     }
-    std::cout<< "upsert Emmt success!"<< std::endl;
+    std::cout << "upsert Emmt success!" << std::endl;
     return Status::OK;
 }
 
 Status PrFilterServiceImpl::SetupXset(ServerContext *context,
-                                      ServerReader<SetupXsetRequest> *reader, google::protobuf::Empty*) {
+                                      ServerReader<SetupXsetRequest> *reader, google::protobuf::Empty *) {
     // clear multiset
     Xset.clear();
     // init Xset
@@ -45,7 +45,7 @@ Status PrFilterServiceImpl::SetupXset(ServerContext *context,
         const auto &xset_v = xset.xset_v();
         Xset.insert(xset_v);
     }
-    std::cout<< "upsert Xset success!"<< std::endl;
+    std::cout << "upsert Xset success!" << std::endl;
     return Status::OK;
 }
 
@@ -76,14 +76,16 @@ Status PrFilterServiceImpl::Search(ServerContext *context,
     search_param.tokp_vec = tokp_vec;
     search_param.emm = emm;
     pr_filter_search_res search_res;
-    std::cout<< "search in server success!"<< std::endl;
+    std::cout << "search in server success!" << std::endl;
     // call PR_Filter_Search
     TimeUtil time_util;
     time_util.initTime();
-    if (PR_Filter_Search(search_param, search_res) != 0) {
-        return Status::CANCELLED;
+    for (int i = 0; i < 1000; i++) {
+        if (PR_Filter_Search(search_param, search_res) != 0) {
+            return Status::CANCELLED;
+        }
     }
-    time_util.endTime("search process");
+    time_util.endTime("search process", 1000);
     // respone
     for (auto &c: search_res.c) {
         searchResponse->add_c(c);

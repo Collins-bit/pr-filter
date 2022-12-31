@@ -5,7 +5,7 @@
 
 using namespace CryptoPP;
 
-void sEMM_Search(std::string tokp, std::map<std::string, cdc> EMMp, std::vector<std::string> &tags);
+void sEMM_Search(std::string tokp, std::map<std::string, cdc> &EMMp, std::vector<std::string> &tags);
 
 typedef struct {
     std::string tokp;
@@ -19,7 +19,7 @@ typedef struct {
     std::vector<std::string> dc;
 } pr_filter_search_res;
 
-int PR_Filter_Search(pr_filter_search_param param, pr_filter_search_res &res);
+int PR_Filter_Search(pr_filter_search_param &param, pr_filter_search_res &res);
 
 #endif //PR_FILTER_SERVER
 

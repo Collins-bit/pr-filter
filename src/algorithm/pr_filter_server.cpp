@@ -1,10 +1,10 @@
 #include <algorithm/pr_filter_server.h>
 
-void sEMM_Search(std::string tokp, std::map<std::string, cdc> EMMp, cdc &tags) {
+void sEMM_Search(std::string tokp, std::map<std::string, cdc> &EMMp, cdc &tags) {
     tags = EMMp[tokp];
 }
 
-int PR_Filter_Search(pr_filter_search_param param, pr_filter_search_res &res) {
+int PR_Filter_Search(pr_filter_search_param &param, pr_filter_search_res &res) {
     // tagl = sEMM.Search(tokp, EMMp)
     cdc tags_l;
     sEMM_Search(param.tokp, param.emm.EMMt, tags_l);

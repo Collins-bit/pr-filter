@@ -13,6 +13,15 @@ void TimeUtil::endTime() {
          << endl;
 }
 
+void TimeUtil::endTime(string msg, int time) {
+    struct timeval end;
+    gettimeofday(&end, NULL);
+    cout << msg << ", time cost: "
+         << ((end.tv_sec - this->start.tv_sec) * 1000000.0 + end.tv_usec - this->start.tv_usec) / 1000.0 / time
+         << " ms"
+         << endl;
+}
+
 void TimeUtil::endTime(string msg) {
     struct timeval end;
     gettimeofday(&end, NULL);

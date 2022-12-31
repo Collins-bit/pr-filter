@@ -20,6 +20,8 @@ public:
 
     void endTime(string msg);
 
+    void endTime(string msg, int time);
+
     void endTime(struct timeval start);
 
     void endTime(struct timeval start, string msg);
