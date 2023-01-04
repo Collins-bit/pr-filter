@@ -5,7 +5,7 @@
 
 using namespace CryptoPP;
 
-void sEMM_Search(std::string tokp, std::map<std::string, cdc> &EMMp, std::vector<std::string> &tags);
+void sEMM_Search(std::string tokp, std::map<std::string, cdc> &EMMp, cdc &tags);
 
 typedef struct {
     std::string tokp;

@@ -2,7 +2,7 @@
 # example: sh convert.sh 1000
 # example: sh convert.sh 1000 ../testData/inverted.txt ../testData/test.txt
 
-g++ convert_union_table2.cpp -o convert -O3
+g++ convert_union_table.cpp -o convert -O3
 
 if [ -z "$2" ]; then
   ./convert $1 ../testData/inverted.txt ../testData/test.txt

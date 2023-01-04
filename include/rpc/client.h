@@ -9,6 +9,7 @@
 #include "PrFilter.grpc.pb.h"
 
 #include <algorithm/pr_filter_client.h>
+#include <conj_filter/conj_filter.h>
 #include <util/file_operate.h>
 #include <util/time_util.h>
 #include <util/storage_overhead.h>
@@ -36,6 +37,7 @@ private:
     std::unique_ptr<PrFilterService::Stub> stub_;
 };
 
+//pr-filter process
 int setup(PrFilterClient &client, std::vector<std::string> command, int &mm_len,
           pr_filter_setup_param &setup_param, pr_filter_setup_res &setup_res);
 
@@ -44,5 +46,8 @@ int token(PrFilterClient &client, std::vector<std::string> command, int mm_len, 
 
 int resolve(PrFilterClient &client, const pr_filter_setup_res& setup_res, pr_filter_token_res token_res,
             std::vector<std::string> words, pr_filter_resolve_param &resolve_param);
+
+//conj-filter process
+int conj_filter_process(std::vector<std::string> command);
 
 #endif //PRFILTER_CLIENT_H

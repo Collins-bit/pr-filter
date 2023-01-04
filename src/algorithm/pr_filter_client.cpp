@@ -1,8 +1,8 @@
 #include <algorithm/pr_filter_client.h>
 
-void sEMM_Setup(int lambda, std::map<std::string, cdc> MMp, std::string &mskt, std::map<std::string, cdc> &EMMp) {
+void sEMM_Setup(int lambda, std::map<std::string, cdc> &MMp, std::string &mskt, std::map<std::string, cdc> &EMMp) {
     mskt = Gen_RandKey(lambda);
-    for (auto mmp: MMp) {
+    for (const auto& mmp: MMp) {
         std::string key_cipher;
         encrypt(mskt, mmp.first, key_cipher);
         EMMp[key_cipher] = mmp.second;
@@ -14,8 +14,13 @@ void sEMM_Token(std::string mskt, std::string w1, std::string w2, std::string &t
     encrypt(mskt, word, token);
 }
 
-int PR_Filter_Setup(pr_filter_setup_param param, pr_filter_setup_res &res) {
-    srand(time(NULL));
+int PR_Filter_Setup(pr_filter_setup_param &param, pr_filter_setup_res &res) {
+    // clear EMM and DX
+    res.emm.EMMt.clear();
+    res.emm.Xset.clear();
+    res.DX.clear();
+    // init rand
+    srand(time(nullptr));
     // generate random key
     res.mk.kv = Gen_RandKey(param.lambda);
     res.mk.kt = Gen_RandKey(param.lambda);
@@ -75,7 +80,7 @@ int PR_Filter_Setup(pr_filter_setup_param param, pr_filter_setup_res &res) {
     return 0;
 }
 
-int PR_Filter_Token(pr_filter_token_param param, pr_filter_token_res &res) {
+int PR_Filter_Token(pr_filter_token_param &param, pr_filter_token_res &res) {
     if (param.words.size() < 2) {
         std::cout << "[PR_Filter_Token] words size too little err: " << param.words.size() << std::endl;
         return -1;
@@ -110,7 +115,7 @@ int PR_Filter_Token(pr_filter_token_param param, pr_filter_token_res &res) {
     return 0;
 }
 
-int PR_Filter_Resolve(pr_filter_resolve_param param, std::vector<std::string> &res) {
+int PR_Filter_Resolve(pr_filter_resolve_param &param, std::vector<std::string> &res) {
     if (param.c.size() != param.dc.size()) {
         std::cout << "[PR_Filter_Resolve] c and dc size wrong: " << param.c.size() << std::endl;
         return -1;
