@@ -10,9 +10,9 @@ size_t getFileSize(const char *fileName) {
     return filesize;
 }
 
-int emmtChange2File(const std::map<std::string, cdc> &EMMt, const string &fpath) {
+int emmtChange2File(const map<string, cdc> &EMMt, const string &fpath) {
     // output file
-    ofstream os(fpath, std::ios::binary | std::ios::out);
+    ofstream os(fpath, ios::binary | ios::out);
     if (!os) {
         cout << "ofstream file failed: " << fpath << endl;
         return -1;
@@ -38,9 +38,9 @@ int emmtChange2File(const std::map<std::string, cdc> &EMMt, const string &fpath)
     return 0;
 }
 
-int xsetChange2File(const std::multiset<std::string> &Xset, const string &fpath) {
+int xsetChange2File(const multiset<string> &Xset, const string &fpath) {
     // output file
-    ofstream os(fpath, std::ios::binary | std::ios::out);
+    ofstream os(fpath, ios::binary | ios::out);
     if (!os) {
         cout << "ofstream file failed: " << fpath << endl;
         return -1;
@@ -67,7 +67,7 @@ int xsetChange2File(const std::multiset<std::string> &Xset, const string &fpath)
 
 int tokenChange2File(const pr_filter_token_res &token, const string &fpath) {
     // output file
-    ofstream os(fpath, std::ios::binary | std::ios::out);
+    ofstream os(fpath, ios::binary | ios::out);
     if (!os) {
         cout << "ofstream file failed: " << fpath << endl;
         return -1;
@@ -102,7 +102,7 @@ int tokenChange2File(const pr_filter_token_res &token, const string &fpath) {
 
 int conjTokenChange2File(const conj_filter_token_res &token, const string &fpath) {
     // output file
-    ofstream os(fpath, std::ios::binary | std::ios::out);
+    ofstream os(fpath, ios::binary | ios::out);
     if (!os) {
         cout << "ofstream file failed: " << fpath << endl;
         return -1;

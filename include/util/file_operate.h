@@ -7,14 +7,14 @@
 
 using namespace std;
 
-std::string StrPaddingWithTag(std::string s, int len);
+string StrPaddingWithTag(string s, int len);
 
-std::string StrRemoveTag(std::string s);
+string StrRemoveTag(string s);
 
-void StrVecRemoveTag(std::vector<std::string> &strs);
+void StrVecRemoveTag(vector<string> &strs);
 
-void Get_MM_from_fpath(std::string path, std::map<std::string, std::vector<std::string>> &MM, int &max_mm_len);
+void Get_MM_from_fpath(string path, map<string, vector<string>> &MM, int &max_mm_len);
 
-int Deal_mm_same_length(int max_mm_len, std::map<std::string, std::vector<std::string>> &MM);
+int Deal_mm_same_length(int max_mm_len, map<string, vector<string>> &MM);
 
 #endif // FILE_OPERATE

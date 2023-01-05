@@ -1,13 +1,13 @@
 #include <util/file_operate.h>
 
-void Get_MM_from_fpath(std::string path, std::map<std::string, std::vector<std::string>> &MM, int &max_mm_len) {
-    std::ifstream MM_myfile(path);
-    std::string w, line;
+void Get_MM_from_fpath(string path, map<string, vector<string>> &MM, int &max_mm_len) {
+    ifstream MM_myfile(path);
+    string w, line;
     max_mm_len = 0;
     while (getline(MM_myfile, line)) {
-        std::stringstream input(line);
-        std::string out;
-        std::vector<std::string> ids;
+        stringstream input(line);
+        string out;
+        vector<string> ids;
         input >> out;
         w = out;
         while (input >> out) {
@@ -16,20 +16,20 @@ void Get_MM_from_fpath(std::string path, std::map<std::string, std::vector<std::
         }
         MM[w] = ids;
     }
-    std::cout << "read MM from file success!" << std::endl;
+    cout << "read MM from file success!" << endl;
 }
 
-std::string StrPaddingWithTag(std::string s, int len) {
-    std::string r = s;
+string StrPaddingWithTag(string s, int len) {
+    string r = s;
     if (s.size() < len) {
         int count = len - s.size();
-        std::string pad(count, '#');
+        string pad(count, '#');
         r += pad;
     }
     return r;
 }
 
-std::string StrRemoveTag(std::string s) {
+string StrRemoveTag(string s) {
     int pos = s.find_first_of('#');
     if (pos == -1) {
         return s;
@@ -37,25 +37,25 @@ std::string StrRemoveTag(std::string s) {
     return s.erase(pos, s.size() - pos);
 }
 
-void StrVecRemoveTag(std::vector<std::string> &strs) {
+void StrVecRemoveTag(vector<string> &strs) {
     for (int i = 0; i < strs.size(); i++) {
         strs[i] = StrRemoveTag(strs[i]);
     }
 }
 
-void StrMapRemoveTag(std::vector<std::string> strs) {
+void StrMapRemoveTag(vector<string> strs) {
     for (int i = 0; i < strs.size(); i++) {
         strs[i] = StrRemoveTag(strs[i]);
     }
 }
 
-int Deal_mm_same_length(int max_mm_len, std::map<std::string, std::vector<std::string>> &MM) {
+int Deal_mm_same_length(int max_mm_len, map<string, vector<string>> &MM) {
     bool flag = true;
     for (auto mm: MM) {
-        std::vector<std::string> tmp(mm.second.size());
+        vector<string> tmp(mm.second.size());
         for (int i = 0; i < mm.second.size(); i++) {
             if (mm.second[i].size() > max_mm_len) {
-                std::cout << "exists greater than the input value" << std::endl;
+                cout << "exists greater than the input value" << endl;
                 return -1;
             } else if (mm.second[i].size() < max_mm_len) {
                 flag = false;
@@ -65,9 +65,9 @@ int Deal_mm_same_length(int max_mm_len, std::map<std::string, std::vector<std::s
         MM[mm.first] = tmp;
     }
     if (flag) {
-        std::cout << "no set MM length." << std::endl;
+        cout << "no set MM length." << endl;
     } else {
-        std::cout << "set MM length to be same success!" << std::endl;
+        cout << "set MM length to be same success!" << endl;
     }
     return 0;
 }

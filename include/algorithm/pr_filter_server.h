@@ -4,19 +4,20 @@
 #include "pr_filter_util.h"
 
 using namespace CryptoPP;
+using namespace std;
 
-void sEMM_Search(std::string tokp, std::map<std::string, cdc> &EMMp, cdc &tags);
+void sEMM_Search(string tokp, map<string, cdc> &EMMp, cdc &tags);
 
 typedef struct {
-    std::string tokp;
-    std::string k_w12_enc;
-    std::vector<key_re_d> tokp_vec;
+    string tokp;
+    string k_w12_enc;
+    vector<key_re_d> tokp_vec;
     EMM emm;
 } pr_filter_search_param;
 
 typedef struct {
-    std::vector<std::string> c;
-    std::vector<std::string> dc;
+    vector<string> c;
+    vector<string> dc;
 } pr_filter_search_res;
 
 int PR_Filter_Search(pr_filter_search_param &param, pr_filter_search_res &res);

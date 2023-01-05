@@ -2,21 +2,21 @@
 
 using namespace CryptoPP;
 
-std::string H1(std::string message, std::string key) {
+string H1(string message, string key) {
     byte buf[SHA256::DIGESTSIZE];
-    std::string salt = key;
+    string salt = key;
     SHA256().CalculateDigest(buf, (byte *) ((message + salt).c_str()), message.size() + salt.size());
-    return std::string((const char *) buf, (size_t) SHA256::DIGESTSIZE);
+    return string((const char *) buf, (size_t) SHA256::DIGESTSIZE);
 }
 
-std::string H(std::string message) {
+string H(string message) {
     byte buf[SHA256::DIGESTSIZE];
-    std::string salt = "01";
+    string salt = "01";
     SHA256().CalculateDigest(buf, (byte *) ((message + salt).c_str()), message.size() + salt.size());
-    return std::string((const char *) buf, (size_t) SHA256::DIGESTSIZE);
+    return string((const char *) buf, (size_t) SHA256::DIGESTSIZE);
 }
 
-int hash_k_int(std::string message, std::string key) {
+int hash_k_int(string message, string key) {
     byte buf[SHA256::DIGESTSIZE];
     SHA256().CalculateDigest(buf, (byte *) ((message + key).c_str()), message.size() + key.size());
     return bytesToInt(buf, 4);
@@ -39,11 +39,11 @@ byte *IntToBytes(int num) {
     return ans;
 }
 
-std::string padding(std::string s, int len) {
-    std::string r;
+string padding(string s, int len) {
+    string r;
     if (s.size() < len) {
         int count = len - s.size();
-        std::string pad(count, '0');
+        string pad(count, '0');
         r = s + pad;
     } else {
         r = s.substr(0, len);
@@ -51,32 +51,32 @@ std::string padding(std::string s, int len) {
     return r;
 }
 
-std::string Xor(std::string s1, std::string s2) {
+string Xor(string s1, string s2) {
 //    if (s1.size() != s2.size()) {
-//        std::cout << "[Warning] [Xor] not sufficient size, s1 lenght: " << s1.size() << ", s2 lenght: " << s2.size()
-//                  << std::endl;
+//        cout << "[Warning] [Xor] not sufficient size, s1 lenght: " << s1.size() << ", s2 lenght: " << s2.size()
+//                  << endl;
 //    }
     if (s1.size() < s2.size()) {
-        std::string tmp = s1;
+        string tmp = s1;
         s1 = s2;
         s2 = tmp;
     }
-    std::string ans = s1;
+    string ans = s1;
     for (int i = 0; i < s2.size(); i++) {
         ans[i] = ans[i] ^ s2[i];
     }
     return ans;
 }
 
-std::string Gen_RandKey(int len) {
-    std::string key = "";
+string Gen_RandKey(int len) {
+    string key = "";
     int rn;
     while (len != 0) {
         rn = rand();
         while (rn != 0) {
             if (len == 0)
                 break;
-            key += std::to_string((rn % 10) % 2);
+            key += to_string((rn % 10) % 2);
             rn /= 10;
             --len;
         }
@@ -84,7 +84,7 @@ std::string Gen_RandKey(int len) {
     return key;
 }
 
-void encrypt(std::string key, std::string plaintext, std::string &ciphertext) {
+void encrypt(string key, string plaintext, string &ciphertext) {
     try {
         key = padding(key, 16);
         byte iv_s[17] = "0123456789abcdef";
@@ -92,15 +92,15 @@ void encrypt(std::string key, std::string plaintext, std::string &ciphertext) {
         e.SetKeyWithIV((byte *) key.c_str(), AES128_KEY_LEN, iv_s, (size_t) AES::BLOCKSIZE);
         byte tmp_new_st[plaintext.size()];
         e.ProcessData(tmp_new_st, (byte *) plaintext.c_str(), plaintext.size());
-        ciphertext = std::string((const char *) tmp_new_st, plaintext.size());
+        ciphertext = string((const char *) tmp_new_st, plaintext.size());
     }
     catch (const CryptoPP::Exception &e) {
-        std::cerr << "encrypt wrong: " << e.what() << std::endl;
+        cerr << "encrypt wrong: " << e.what() << endl;
         exit(1);
     }
 }
 
-void decrypt(std::string key, std::string ciphertext, std::string &plaintext) {
+void decrypt(string key, string ciphertext, string &plaintext) {
     try {
         key = padding(key, 16);
         byte iv_s[17] = "0123456789abcdef";
@@ -108,10 +108,10 @@ void decrypt(std::string key, std::string ciphertext, std::string &plaintext) {
         d.SetKeyWithIV((byte *) key.c_str(), AES128_KEY_LEN, iv_s, (size_t) AES::BLOCKSIZE);
         byte tmp_new_st[ciphertext.size()];
         d.ProcessData(tmp_new_st, (byte *) ciphertext.c_str(), ciphertext.size());
-        plaintext = std::string((const char *) tmp_new_st, ciphertext.size());
+        plaintext = string((const char *) tmp_new_st, ciphertext.size());
     }
     catch (const CryptoPP::Exception &e) {
-        std::cerr << "decrypt wrong: " << e.what() << std::endl;
+        cerr << "decrypt wrong: " << e.what() << endl;
         exit(1);
     }
 }

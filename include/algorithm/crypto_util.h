@@ -14,17 +14,18 @@
 #include <bits/stdc++.h>
 
 using namespace CryptoPP;
+using namespace std;
 
 #define AES128_KEY_LEN 16
 
 // hash function with salt
-std::string H1(std::string message, std::string key);
+string H1(string message, string key);
 
 // hash function without salt
-std::string H(std::string message);
+string H(string message);
 
 // hash function: return int
-int hash_k_int(std::string message, std::string key);
+int hash_k_int(string message, string key);
 
 // byte to Int
 int bytesToInt(byte *bytes, int size);
@@ -33,18 +34,18 @@ int bytesToInt(byte *bytes, int size);
 byte *IntToBytes(int num);
 
 // padding with zero
-std::string padding(std::string s, int len);
+string padding(string s, int len);
 
 // xor
-std::string Xor(std::string s1, std::string s2);
+string Xor(string s1, string s2);
 
 // random key: return string
-std::string Gen_RandKey(int len);
+string Gen_RandKey(int len);
 
 // AES-CFB encrypt
-void encrypt(std::string key, std::string plaintext, std::string &ciphertext);
+void encrypt(string key, string plaintext, string &ciphertext);
 
 // AES-CFB decrypt
-void decrypt(std::string key, std::string ciphertext, std::string &plaintext);
+void decrypt(string key, string ciphertext, string &plaintext);
 
 #endif //CRYPTO_UTIL
