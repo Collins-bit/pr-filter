@@ -35,7 +35,8 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 aux_source_directory(src/algorithm crypto_srcs)
 aux_source_directory(src/util crypto_srcs)
 aux_source_directory(src/conj_filter crypto_srcs)
-aux_source_directory(src/rpc/dal crypto_srcs)
+aux_source_directory(src/rpc/server crypto_srcs)
+aux_source_directory(src/rpc/client crypto_srcs)
 
 add_library(pr_grpc_proto
   ${pr_grpc_srcs}
@@ -49,7 +50,7 @@ target_link_libraries(pr_grpc_proto
   ${_PROTOBUF_LIBPROTOBUF} -O3)
 
 foreach(_target client server)
-  add_executable(${_target} "./src/rpc/${_target}.cc")
+  add_executable(${_target} "./src/rpc/${_target}_main.cc")
   target_link_libraries(${_target}
     pr_grpc_proto
     ${_REFLECTION}
