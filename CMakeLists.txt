@@ -23,6 +23,12 @@ add_custom_command(
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/binary)
 
+option(TEST "start testing" OFF)
+if (TEST)
+  message("-- Note: Start testing, terminal include test results")
+  add_definitions(-DTEST)
+endif(TEST)
+
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 include_directories(${CMAKE_SOURCE_DIR}/include)
 

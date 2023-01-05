@@ -28,6 +28,7 @@ int setup(PrFilterClient &client, std::vector<std::string> command, int &mm_len,
     setup_param.lambda = keylen;
     setup_param.mu = keylen;
     // call PR_Filter_Setup
+#ifdef TEST
     TimeUtil time_util;
     time_util.initTime();
     for (int i = 0; i < 100; i++) {
@@ -39,6 +40,12 @@ int setup(PrFilterClient &client, std::vector<std::string> command, int &mm_len,
     time_util.endTime("setup process", 100);
     emmtChange2File(setup_res.emm.EMMt, "./emmt.txt");
     xsetChange2File(setup_res.emm.Xset, "./xset.txt");
+#else
+    if (PR_Filter_Setup(setup_param, setup_res) != 0) {
+        std::cout << "[setup] call PR_Filter_Setup failed!" << std::endl;
+        return -2;
+    }
+#endif
     // send to server
     if (client.SendEmmt(setup_res.emm.EMMt) != 0) {
         std::cout << "[setup] send emmt to server failed!" << std::endl;
@@ -77,7 +84,9 @@ int token(PrFilterClient &client, std::vector<std::string> command, int mm_len, 
         std::cout << "[token] call PR_Filter_Token failed!" << std::endl;
         return -2;
     }
+#ifdef TEST
     tokenChange2File(token_res, "./token.txt");
+#endif
     return 0;
 }
 
@@ -242,17 +251,24 @@ int conj_filter_process(std::vector<std::string> command) {
     conj_filter_setup_res conj_setup_res;
     conj_setup_param.MM = MM;
     conj_setup_param.lambda = keylen;
+#ifdef TEST
     TimeUtil time_util1;
     time_util1.initTime();
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 100; i++) {
         if (Conj_Filter_Setup(conj_setup_param, conj_setup_res) != 0) {
             std::cout << "[setup] call Conj_Filter_Setup failed!" << std::endl;
             return -2;
         }
     }
-    time_util1.endTime("conj setup process", 1);
+    time_util1.endTime("conj setup process", 100);
     emmtChange2File(conj_setup_res.EMMp, "./emmt.txt");
     xsetChange2File(conj_setup_res.X, "./xset.txt");
+#else
+    if (Conj_Filter_Setup(conj_setup_param, conj_setup_res) != 0) {
+        std::cout << "[setup] call Conj_Filter_Setup failed!" << std::endl;
+        return -2;
+    }
+#endif
     std::cout<<"setup success!\n"<<std::endl;
 
     // call Conj_Filter_Token
@@ -267,7 +283,9 @@ int conj_filter_process(std::vector<std::string> command) {
         std::cout << "[token] call Conj_Filter_Token failed!" << std::endl;
         return -2;
     }
+#ifdef TEST
     conjTokenChange2File(conj_token_res, "./conj_token.txt");
+#endif
     std::cout<<"token success!\n"<<std::endl;
 
     // call Conj_Filter_Search
@@ -278,6 +296,7 @@ int conj_filter_process(std::vector<std::string> command) {
     conj_search_param.EMMp = conj_setup_res.EMMp;
     conj_search_param.X = conj_setup_res.X;
     std::vector<std::string> conj_ev;
+#ifdef TEST
     TimeUtil time_util2;
     time_util2.initTime();
     for (int i = 0; i < 10000; i++) {
@@ -287,6 +306,12 @@ int conj_filter_process(std::vector<std::string> command) {
         }
     }
     time_util2.endTime("search process", 10000);
+#else
+    if (Conj_Filter_Search(conj_search_param, conj_ev) != 0) {
+        std::cout << "call Conj_Filter_Search failed!" << std::endl;
+        return -2;
+    }
+#endif
     std::cout<<"search success!\n"<<std::endl;
 
     // call Conj_Filter_Resolve

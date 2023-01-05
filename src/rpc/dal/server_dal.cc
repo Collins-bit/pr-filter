@@ -78,6 +78,7 @@ Status PrFilterServiceImpl::Search(ServerContext *context,
     pr_filter_search_res search_res;
     std::cout << "search in server success!" << std::endl;
     // call PR_Filter_Search
+#ifdef TEST
     TimeUtil time_util;
     time_util.initTime();
     for (int i = 0; i < 1000; i++) {
@@ -86,6 +87,11 @@ Status PrFilterServiceImpl::Search(ServerContext *context,
         }
     }
     time_util.endTime("search process", 1000);
+#else
+    if (PR_Filter_Search(search_param, search_res) != 0) {
+        return Status::CANCELLED;
+    }
+#endif
     // respone
     for (auto &c: search_res.c) {
         searchResponse->add_c(c);
