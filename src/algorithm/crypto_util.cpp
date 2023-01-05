@@ -2,7 +2,6 @@
 
 using namespace CryptoPP;
 
-// hash函数 带盐值
 std::string H1(std::string message, std::string key) {
     byte buf[SHA256::DIGESTSIZE];
     std::string salt = key;
@@ -10,7 +9,6 @@ std::string H1(std::string message, std::string key) {
     return std::string((const char *) buf, (size_t) SHA256::DIGESTSIZE);
 }
 
-// hash函数，不带盐值
 std::string H(std::string message) {
     byte buf[SHA256::DIGESTSIZE];
     std::string salt = "01";
@@ -18,14 +16,12 @@ std::string H(std::string message) {
     return std::string((const char *) buf, (size_t) SHA256::DIGESTSIZE);
 }
 
-// hash函数，输出Int
 int hash_k_int(std::string message, std::string key) {
     byte buf[SHA256::DIGESTSIZE];
     SHA256().CalculateDigest(buf, (byte *) ((message + key).c_str()), message.size() + key.size());
     return bytesToInt(buf, 4);
 }
 
-// byte转Int
 int bytesToInt(byte *bytes, int size = 4) {
     int addr = bytes[0] & 0xFF;
     addr |= ((bytes[1] << 8) & 0xFF00);
@@ -34,7 +30,6 @@ int bytesToInt(byte *bytes, int size = 4) {
     return addr;
 }
 
-// Int转byte
 byte *IntToBytes(int num) {
     byte *ans = new byte[4];
     ans[0] = (byte) (num);
@@ -44,7 +39,6 @@ byte *IntToBytes(int num) {
     return ans;
 }
 
-// 填充算法: 后面填0
 std::string padding(std::string s, int len) {
     std::string r;
     if (s.size() < len) {
@@ -57,7 +51,6 @@ std::string padding(std::string s, int len) {
     return r;
 }
 
-// string 异或
 std::string Xor(std::string s1, std::string s2) {
 //    if (s1.size() != s2.size()) {
 //        std::cout << "[Warning] [Xor] not sufficient size, s1 lenght: " << s1.size() << ", s2 lenght: " << s2.size()
@@ -75,7 +68,6 @@ std::string Xor(std::string s1, std::string s2) {
     return ans;
 }
 
-// 产生随机数密钥串，类型为string
 std::string Gen_RandKey(int len) {
     std::string key = "";
     int rn;
@@ -92,7 +84,6 @@ std::string Gen_RandKey(int len) {
     return key;
 }
 
-// AES加密函数
 void encrypt(std::string key, std::string plaintext, std::string &ciphertext) {
     try {
         key = padding(key, 16);
@@ -109,7 +100,6 @@ void encrypt(std::string key, std::string plaintext, std::string &ciphertext) {
     }
 }
 
-// AES解密函数
 void decrypt(std::string key, std::string ciphertext, std::string &plaintext) {
     try {
         key = padding(key, 16);

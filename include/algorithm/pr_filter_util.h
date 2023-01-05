@@ -36,25 +36,25 @@ typedef struct {
     std::vector<std::string> KeyPhi;
 } key_re_d;
 
-//从word中获取w1和w2
+// get w1 and w2 from word
 int find_w12_from_w(std::string word, std::string &w1, std::string &w2);
 
-// 排列加密算法: 将pin按kep顺序排列，pin为string
+// arrange encryption: arrange pins in kep order, input is string
 std::string Permutation(int n, std::vector<int> kep, std::string pin);
 
-// 排列加密算法: 将pin按kep顺序重排回原列
+// rearrange encryption: rearrange pins back to the original column in kep order
 std::string De_Permutation(int n, std::vector<int> kep, std::string dpin);
 
-// 排列加密算法：将pin按kep顺序排列，pin为string数组
+// arrange encryption: arrange pins in kep order
 int Permutation2(int start, std::vector<int> kep, std::vector<std::string> pin, std::vector<std::string> &dpin);
 
-// 排列加密算法: 将pin按kep顺序重排回原列
+// rearrange encryption: rearrange pins back to the original column in kep order, input is vector
 int De_Permutation2(int start, std::vector<int> kep, std::vector<std::string> dpin, std::vector<std::string> &pin);
 
-// 根据kpa和kpb调整顺序
+// adjust the sequence according to kpa and kpb
 std::vector<int> Find_CK(int n, std::vector<int> kpa, std::vector<int> kpb);
 
-// 密钥扩展函数，将密钥从key长度扩展到n长度
+// key extension: extends the key to n
 int Permutationkey_Gen(std::string key, int n, std::vector<int> &ret);
 
 int AONTH(int ctr, std::string m, std::string &mplus, std::string &dmplus);

@@ -16,7 +16,6 @@ int find_w12_from_w(std::string word, std::string &w1, std::string &w2) {
     return 0;
 }
 
-// 排列加密算法: 将pin按kep顺序排列，pin为string
 std::string Permutation(int n, std::vector<int> kep, std::string pin) {
     std::string pout = "";
     for (size_t i = 0; i < n; i++) {
@@ -25,7 +24,6 @@ std::string Permutation(int n, std::vector<int> kep, std::string pin) {
     return pout;
 }
 
-// 排列加密算法: 将pin按kep顺序重排回原列
 std::string De_Permutation(int n, std::vector<int> kep, std::string dpin) {
     char dpout[n];
     for (size_t i = 0; i < n; i++) {
@@ -38,7 +36,6 @@ std::string De_Permutation(int n, std::vector<int> kep, std::string dpin) {
     return ret;
 }
 
-// 排列加密算法：将pin按kep顺序排列，pin为string数组，start为开始位置
 int Permutation2(int start, std::vector<int> kep, std::vector<std::string> pin, std::vector<std::string> &dpin) {
     for (size_t i = 0; i < kep.size(); i++) {
         dpin[i + start] = (pin[start + kep[i]]);
@@ -46,7 +43,6 @@ int Permutation2(int start, std::vector<int> kep, std::vector<std::string> pin, 
     return 0;
 }
 
-// 排列加密算法: 将pin按kep顺序重排回原列
 int De_Permutation2(int start, std::vector<int> kep, std::vector<std::string> dpin, std::vector<std::string> &pin) {
     for (size_t i = 0; i < kep.size(); i++) {
         pin[kep[i] + start] = dpin[i + start];
@@ -54,7 +50,6 @@ int De_Permutation2(int start, std::vector<int> kep, std::vector<std::string> dp
     return 0;
 }
 
-// 根据kpa和kpb调整顺序
 std::vector<int> Find_CK(int n, std::vector<int> kpa, std::vector<int> kpb) {
     std::map<int, int> ck_mpa;
     for (int i = 0; i < n; i++) {
@@ -67,7 +62,6 @@ std::vector<int> Find_CK(int n, std::vector<int> kpa, std::vector<int> kpb) {
     return ret;
 }
 
-// 密钥扩展函数，将密钥从key长度扩展到n长度
 int Permutationkey_Gen(std::string key, int n, std::vector<int> &ret) {
     if (ret.size() != n) {
         std::cout << "[Permutationkey_Gen] ret size is not n: " << ret.size() << std::endl;
