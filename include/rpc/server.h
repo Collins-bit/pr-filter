@@ -8,7 +8,7 @@
 #include <grpcpp/grpcpp.h>
 #include "PrFilter.grpc.pb.h"
 
-#include <algorithm/pr_filter_server.h>
+#include <pr_filter/pr_filter_server.h>
 #include <util/time_util.h>
 
 using grpc::Server;

@@ -8,7 +8,7 @@
 #include <grpcpp/grpcpp.h>
 #include "PrFilter.grpc.pb.h"
 
-#include <algorithm/pr_filter_client.h>
+#include <pr_filter/pr_filter_client.h>
 #include <conj_filter/conj_filter.h>
 #include <util/file_operate.h>
 #include <util/time_util.h>

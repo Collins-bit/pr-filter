@@ -1,8 +1,8 @@
 #ifndef PRFILTER_CONJ_FILTER_H
 #define PRFILTER_CONJ_FILTER_H
 
-#include <algorithm/pr_filter_client.h>
-#include <algorithm/pr_filter_server.h>
+#include <pr_filter/pr_filter_client.h>
+#include <pr_filter/pr_filter_server.h>
 
 using namespace std;
 

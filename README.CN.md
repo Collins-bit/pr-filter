@@ -117,7 +117,7 @@ $ token -w name age sex
 
 $ resolve
 
-$ conj f ../testData/test.txt -k 32 -w name age sex
+$ conj -f ../testData/test.txt -k 32 -w name age sex
 
 $ stop
 ```

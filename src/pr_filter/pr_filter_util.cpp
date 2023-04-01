@@ -1,4 +1,4 @@
-#include <algorithm/pr_filter_util.h>
+#include <pr_filter/pr_filter_util.h>
 
 int find_w12_from_w(string word, string &w1, string &w2) {
     if (word == "") {

@@ -5,7 +5,7 @@
 #include <iostream>
 #include <sys/stat.h>
 #include <cstdio>
-#include <algorithm/pr_filter_client.h>
+#include <pr_filter/pr_filter_client.h>
 #include <conj_filter/conj_filter.h>
 
 using namespace std;

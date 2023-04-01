@@ -32,7 +32,7 @@ endif(TEST)
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-aux_source_directory(src/algorithm crypto_srcs)
+aux_source_directory(src/pr_filter crypto_srcs)
 aux_source_directory(src/util crypto_srcs)
 aux_source_directory(src/conj_filter crypto_srcs)
 aux_source_directory(src/rpc/server crypto_srcs)
