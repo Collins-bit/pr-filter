@@ -121,3 +121,25 @@ int conjTokenChange2File(const conj_filter_token_res &token, const string &fpath
     }
     return 0;
 }
+
+int mlemmTokenChange2File(const mlemm_token_res &token, const string &fpath) {
+    // output file
+    ofstream os(fpath, ios::binary | ios::out);
+    if (!os) {
+        cout << "ofstream file failed: " << fpath << endl;
+        return -1;
+    }
+    os << token.tokp << token.k_l123_enc << "\n";
+    for (const auto &key: token.kx) {
+        os << key << " ";
+    }
+    os.close();
+    // compute size
+    size_t file_size = getFileSize(fpath.c_str());
+    cout << "size of token is: " << file_size << " bytes" << endl;
+    // delete file
+    if (remove(fpath.c_str()) != 0) {
+        cout << "[error] delete file failed " << endl;
+    }
+    return 0;
+}

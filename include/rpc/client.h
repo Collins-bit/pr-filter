@@ -10,6 +10,7 @@
 
 #include <pr_filter/pr_filter_client.h>
 #include <conj_filter/conj_filter.h>
+#include <mlemm/mlemm.h>
 #include <util/file_operate.h>
 #include <util/time_util.h>
 #include <util/storage_overhead.h>
@@ -49,5 +50,8 @@ int resolve(PrFilterClient &client, const pr_filter_setup_res& setup_res, pr_fil
 
 //conj-filter process
 int conj_filter_process(std::vector<std::string> command);
+
+//mlemm process
+int mlemm_process(std::vector<std::string> command);
 
 #endif //PRFILTER_CLIENT_H

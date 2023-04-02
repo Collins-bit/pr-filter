@@ -80,6 +80,10 @@ $ stop
 # conj: execute conj-filter scheme
 $ conj -f ${file-path} -k ${key-lenght} -w ${word1} ${word2} ... ${wordn}
 $ conj -fpath ${file-path} -keylen ${key-lenght} -word ${word1} ${word2} ... ${wordn}
+
+# mlemm: execute mlemm scheme
+$ mlemm f ${file-path} -k ${key-lenght} -w ${word1} ${word2} ... ${wordn}
+$ mlemm -fpath ${file-path} -keylen ${key-lenght} -word ${word1} ${word2} ... ${wordn}
 ```
 - file-path: union file path (relative to client).
 - key-length: the length of key (integer).
@@ -98,13 +102,18 @@ $ ./client
 ```
 continue to enter,
 ```
-$ setup -f ../testData/test.txt -k 32
+$ setup -f ../testData/test_MM.txt -k 32
 
 $ token -w name age sex
 
 $ resolve
 
-$ conj -f ../testData/test.txt -k 32 -w name age sex
+$ conj -f ../testData/test_MM.txt -k 32 -w name age sex
+
+$ mlemm -f ../testData/test_MM_w3.txt -k 32 -w name age sex grade
 
 $ stop
 ```
+
+### Unit Tests
+under folder ./test/*

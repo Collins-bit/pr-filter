@@ -8,7 +8,7 @@ void handleInputParam(PrFilterClient &client) {
     pr_filter_token_res token_res;
     pr_filter_resolve_param resolve_param;
     while (true) {
-        std::cout << "please input command (support setup, token, resolve, conj, stop): \n";
+        std::cout << "please input command (support setup, token, resolve, conj, mlemm, stop): \n";
         std::string command;
         getline(std::cin, command);
         // split command
@@ -23,6 +23,8 @@ void handleInputParam(PrFilterClient &client) {
         if (c_vec[0] == "stop") break;
         else if (c_vec[0] == "conj") {
             conj_filter_process(c_vec);
+        } else if (c_vec[0] == "mlemm") {
+            mlemm_process(c_vec);
         } else if (c_vec[0] == "setup") {
             if (setup(client, c_vec, mm_len, setup_param, setup_res) == 0) {
                 std::cout << "setup success!" << std::endl;

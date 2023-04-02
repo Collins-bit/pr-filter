@@ -1,0 +1,3 @@
+name∩age∩sex id1 id2 id3
+name∩age∩grade id1 id2 id3
+age∩sex∩grade id1 id2 id3

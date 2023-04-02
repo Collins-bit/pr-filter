@@ -6,15 +6,16 @@
 
 文件目录说明：
 
-| 文件/目录名                      | 文件/目录具体内容                |
-|-----------------------------| -------------------------------- |
-| binary (未生成)                | 可执行文件                       |
-| idl                         | proto3定义文件                   |
-| include                     | 项目头文件                       |
-| scripts                     | 脚本文件（生成可测试的并集文件） |
-| src                         | 项目源码                         |
-| testData                    | 可测试的并集文件                 |
-| CMakeLists.txt和common.cmake | cmake配置文件                    |
+| 文件/目录名                  | 文件/目录具体内容        |
+|-------------------------|------------------|
+| binary (未生成)            | 可执行文件            |
+| idl                     | proto3定义文件       |
+| include                 | 项目头文件            |
+| scripts                 | 脚本文件（生成可测试的并集文件） |
+| src                     | 项目源码             |
+| testData                | 可测试的并集文件         |
+| test                    | 单元测试文件           |
+| CMakeLists.txt和common.cmake | cmake配置文件        |
 
 ## 编译&安装
 
@@ -93,6 +94,10 @@ $ stop
 # conj: 执行conj-filter方案
 $ conj f ${file-path} -k ${key-lenght} -w ${word1} ${word2} ... ${wordn}
 $ conj -fpath ${file-path} -keylen ${key-lenght} -word ${word1} ${word2} ... ${wordn}
+
+# mlemm: 执行mlemm方案
+$ mlemm f ${file-path} -k ${key-lenght} -w ${word1} ${word2} ... ${wordn}
+$ mlemm -fpath ${file-path} -keylen ${key-lenght} -word ${word1} ${word2} ... ${wordn}
 ```
 - file-path 并集文件路径（相对于client）
 - key-lenght 密钥长度（整数）
@@ -111,13 +116,18 @@ $ ./client
 ```
 接下来继续输入：
 ```
-$ setup -f ../testData/test.txt -k 32
+$ setup -f ../testData/test_MM.txt -k 32
 
 $ token -w name age sex
 
 $ resolve
 
-$ conj -f ../testData/test.txt -k 32 -w name age sex
+$ conj -f ../testData/test_MM.txt -k 32 -w name age sex
+
+$ mlemm -f ../testData/test_MM_w3.txt -k 32 -w name age sex grade
 
 $ stop
 ```
+
+### 单元测试
+在当前目录下./test/*

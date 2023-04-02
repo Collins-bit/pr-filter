@@ -29,12 +29,16 @@ if (TEST)
   add_definitions(-DTEST)
 endif(TEST)
 
+ADD_SUBDIRECTORY(test)
+
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
 aux_source_directory(src/pr_filter crypto_srcs)
-aux_source_directory(src/util crypto_srcs)
 aux_source_directory(src/conj_filter crypto_srcs)
+aux_source_directory(src/melmm crypto_srcs)
+aux_source_directory(src/util crypto_srcs)
+
 aux_source_directory(src/rpc/server crypto_srcs)
 aux_source_directory(src/rpc/client crypto_srcs)
 
@@ -47,7 +51,7 @@ add_library(pr_grpc_proto
 target_link_libraries(pr_grpc_proto
   ${_REFLECTION}
   ${_GRPC_GRPCPP}
-  ${_PROTOBUF_LIBPROTOBUF} -O3)
+  ${_PROTOBUF_LIBPROTOBUF})
 
 foreach(_target client server)
   add_executable(${_target} "./src/rpc/${_target}_main.cc")
