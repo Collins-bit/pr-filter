@@ -97,7 +97,7 @@ void rand_mm(const std::string &ofpath, vector<int> input_w_time) {
 int main(int argc, char *argv[]) {
     srand(time(NULL));
     num_set.clear();
-    vector<int> input_w_time = w_time[0];
+    vector<int> input_w_time = w_time[31];
     cout<<"current w_time: ";
     for(auto w : input_w_time){
         cout<<w << " ";
