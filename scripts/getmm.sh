@@ -2,7 +2,7 @@
 # example: sh getmm.sh ../testData/union_MM.txt
 # example: sh getmm.sh ../testData/union_MM.txt 1000 ../testData/test.txt
 
-g++ get_MM_num.cpp -o getmm -O3
+g++ get_MM_num.cpp -o getmm
 
 if [ -z "$2" ]; then
   ./getmm $1
