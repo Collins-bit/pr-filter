@@ -1,6 +1,6 @@
-# Pr_Filter方案
+# Pr-Filter方案
 
-我们提出了一种新型Pr-filter构造，是比conj-Filter构造泄漏更少的联合查询方案。这是方案的c++实现，使用到grpc和CryptoPP库。
+我们提出了一种新型Pr-filter构造，是比Conj-Filter构造泄漏更少的联合查询方案。这是方案的c++实现，使用到grpc和CryptoPP库。
 
 ## 说明
 
@@ -130,4 +130,4 @@ $ stop
 ```
 
 ### 单元测试
-在当前目录下./test/*
+测试文件在当前目录下./test/*，生成的可执行测试文件在当前目录./binary/下。

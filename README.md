@@ -1,8 +1,6 @@
-# Scheme of Pr_Filter
+# Scheme of Pr-Filter [中文文档](./README.CN.md)
 
-[chinese version](./README.CN.md)
-
-Our work proposing a new construction PR-Filter for conjunctive queries with less leakage than conj-Filter. This is the c++ implementation of the scheme, using gRpc and CryptoPP libraries.
+Our work proposing a new construction PR-Filter for conjunctive queries with less leakage than Conj-Filter. This is the c++ implementation of the scheme, using gRpc and CryptoPP libraries.
 
 ## Build & Install
 
