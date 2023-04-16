@@ -1,6 +1,6 @@
 # Pr-Filter方案
 
-我们提出了一种新型Pr-filter构造，是比Conj-Filter构造泄漏更少的联合查询方案。这是方案的c++实现，使用到grpc和CryptoPP库。
+我们提出了一种新型Pr-filter构造，是比Conj-Filter构造泄漏更少的联合查询方案。这是方案的c++实现，使用到gRPC和CryptoPP库。
 
 ## 说明
 
