@@ -39,6 +39,7 @@ int setup(PrFilterClient &client, std::vector<std::string> command, int &mm_len,
     time_util.endTime("setup process", 100);
     emmtChange2File(setup_res.emm.EMMt, "./emmt.txt");
     xsetChange2File(setup_res.emm.Xset, "./xset.txt");
+    dxChange2File(setup_res.DX, "./dx.txt");
 #else
     if (PR_Filter_Setup(setup_param, setup_res) != 0) {
         std::cout << "[setup] call PR_Filter_Setup failed!" << std::endl;

@@ -65,6 +65,33 @@ int xsetChange2File(const multiset<string> &Xset, const string &fpath) {
     return 0;
 }
 
+int dxChange2File(const map<string, int> &DX, const string &fpath){
+    // output file
+    ofstream os(fpath, ios::binary | ios::out);
+    if (!os) {
+        cout << "ofstream file failed: " << fpath << endl;
+        return -1;
+    }
+    int time = 0;
+    for (const auto &dx: DX) {
+        if (time == 50) {
+            os << "\n";
+            time = 0;
+        }
+        os << dx.first << dx.second;
+        ++time;
+    }
+    os.close();
+    // compute size
+    size_t file_size = getFileSize(fpath.c_str());
+    cout << "size of DX is: " << file_size << " bytes" << endl;
+    // delete file
+    if (remove(fpath.c_str()) != 0) {
+        cout << "[error] delete file failed " << endl;
+    }
+    return 0;
+}
+
 int tokenChange2File(const pr_filter_token_res &token, const string &fpath) {
     // output file
     ofstream os(fpath, ios::binary | ios::out);
