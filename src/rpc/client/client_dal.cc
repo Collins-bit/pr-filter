@@ -1,6 +1,6 @@
 #include <rpc/client.h>
 
-int PrFilterClient::SendEmmt(const std::map<std::string, cdc> &EMMt) {
+int TKFilterClient::SendEmmt(const std::map<std::string, cdc> &EMMt) {
     ClientContext context;
     std::unique_ptr<grpc::ClientWriter<SetupEmmtRequest> > writer;
     SetupEmmtRequest request;
@@ -8,7 +8,7 @@ int PrFilterClient::SendEmmt(const std::map<std::string, cdc> &EMMt) {
     writer = stub_->SetupEmmt(&context, &response);
     for (const auto &emmt: EMMt) {
         request.set_key(emmt.first);
-        auto *value = new PrFilter::cbc();
+        auto *value = new TKFilter::cbc();
         for (const auto &i: emmt.second.c) {
             value->add_c(i);
         }
@@ -31,7 +31,7 @@ int PrFilterClient::SendEmmt(const std::map<std::string, cdc> &EMMt) {
     }
 }
 
-int PrFilterClient::SendXset(const std::multiset<std::string> &Xset) {
+int TKFilterClient::SendXset(const std::multiset<std::string> &Xset) {
     ClientContext context;
     SetupXsetRequest request;
     google::protobuf::Empty response;
@@ -54,7 +54,7 @@ int PrFilterClient::SendXset(const std::multiset<std::string> &Xset) {
     }
 }
 
-int PrFilterClient::SearchInServer(pr_filter_token_res token_res, std::vector<std::string> &c,
+int TKFilterClient::SearchInServer(tk_filter_token_res token_res, std::vector<std::string> &c,
                                    std::vector<std::string> &dc, std::vector<bool> &vaild) {
     ClientContext context;
     SearchRequest request;

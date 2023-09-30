@@ -92,7 +92,7 @@ int dxChange2File(const map<string, int> &DX, const string &fpath){
     return 0;
 }
 
-int tokenChange2File(const pr_filter_token_res &token, const string &fpath) {
+int tokenChange2File(const tk_filter_token_res &token, const string &fpath) {
     // output file
     ofstream os(fpath, ios::binary | ios::out);
     if (!os) {

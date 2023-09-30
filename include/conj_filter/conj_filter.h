@@ -1,8 +1,8 @@
 #ifndef CONJ_FILTER_H
 #define CONJ_FILTER_H
 
-#include <pr_filter/pr_filter_client.h>
-#include <pr_filter/pr_filter_server.h>
+#include <tk_filter/tk_filter_client.h>
+#include <tk_filter/tk_filter_server.h>
 
 using namespace std;
 

@@ -2,7 +2,7 @@
 
 void RunServer() {
     std::string server_address("0.0.0.0:12520");
-    PrFilterServiceImpl service;
+    TKFilterServiceImpl service;
 
     ServerBuilder builder;
     builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());

@@ -19,7 +19,7 @@ std::vector<int> intChangeToVec(google::protobuf::RepeatedField<int32_t> value) 
     return vec;
 }
 
-Status PrFilterServiceImpl::SetupEmmt(ServerContext *context,
+Status TKFilterServiceImpl::SetupEmmt(ServerContext *context,
                                       ServerReader<SetupEmmtRequest> *reader, google::protobuf::Empty *) {
     // clear map
     EMMt.clear();
@@ -35,7 +35,7 @@ Status PrFilterServiceImpl::SetupEmmt(ServerContext *context,
     return Status::OK;
 }
 
-Status PrFilterServiceImpl::SetupXset(ServerContext *context,
+Status TKFilterServiceImpl::SetupXset(ServerContext *context,
                                       ServerReader<SetupXsetRequest> *reader, google::protobuf::Empty *) {
     // clear multiset
     Xset.clear();
@@ -49,7 +49,7 @@ Status PrFilterServiceImpl::SetupXset(ServerContext *context,
     return Status::OK;
 }
 
-Status PrFilterServiceImpl::Search(ServerContext *context,
+Status TKFilterServiceImpl::Search(ServerContext *context,
                                    const SearchRequest *request, SearchResponse *searchResponse) {
     // tokp_vec
     std::vector<key_re_d> tokp_vec(request->tokp_vec().size());
@@ -70,25 +70,25 @@ Status PrFilterServiceImpl::Search(ServerContext *context,
     emm.EMMt = EMMt;
     emm.Xset = Xset;
     // search_param
-    pr_filter_search_param search_param;
+    tk_filter_search_param search_param;
     search_param.tokp = request->tokp();
     search_param.k_w12_enc = request->k_w12_enc();
     search_param.tokp_vec = tokp_vec;
     search_param.emm = emm;
-    pr_filter_search_res search_res;
+    tk_filter_search_res search_res;
     std::cout << "search in server success!" << std::endl;
-    // call PR_Filter_Search
+    // call TK_Filter_Search
 #ifdef TEST
     TimeUtil time_util;
     time_util.initTime();
     for (int i = 0; i < 1000; i++) {
-        if (PR_Filter_Search(search_param, search_res) != 0) {
+        if (TK_Filter_Search(search_param, search_res) != 0) {
             return Status::CANCELLED;
         }
     }
     time_util.endTime("search process", 1000);
 #else
-    if (PR_Filter_Search(search_param, search_res) != 0) {
+    if (TK_Filter_Search(search_param, search_res) != 0) {
         return Status::CANCELLED;
     }
 #endif

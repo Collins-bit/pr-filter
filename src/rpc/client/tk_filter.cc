@@ -1,8 +1,8 @@
 #include <rpc/client.h>
 #include <utility>
 
-int setup(PrFilterClient &client, std::vector<std::string> command, int &mm_len,
-          pr_filter_setup_param &setup_param, pr_filter_setup_res &setup_res) {
+int setup(TKFilterClient &client, std::vector<std::string> command, int &mm_len,
+          tk_filter_setup_param &setup_param, tk_filter_setup_res &setup_res) {
     // get from command
     std::string fpath = "../testData/test_MM.txt";
     int keylen = 32;
@@ -26,13 +26,13 @@ int setup(PrFilterClient &client, std::vector<std::string> command, int &mm_len,
     setup_param.MM = MM;
     setup_param.lambda = keylen;
     setup_param.mu = keylen;
-    // call PR_Filter_Setup
+    // call TK_Filter_Setup
 #ifdef TEST
     TimeUtil time_util;
     time_util.initTime();
     for (int i = 0; i < 100; i++) {
-        if (PR_Filter_Setup(setup_param, setup_res) != 0) {
-            std::cout << "[setup] call PR_Filter_Setup failed!" << std::endl;
+        if (TK_Filter_Setup(setup_param, setup_res) != 0) {
+            std::cout << "[setup] call TK_Filter_Setup failed!" << std::endl;
             return -2;
         }
     }
@@ -41,8 +41,8 @@ int setup(PrFilterClient &client, std::vector<std::string> command, int &mm_len,
     xsetChange2File(setup_res.emm.Xset, "./xset.txt");
     dxChange2File(setup_res.DX, "./dx.txt");
 #else
-    if (PR_Filter_Setup(setup_param, setup_res) != 0) {
-        std::cout << "[setup] call PR_Filter_Setup failed!" << std::endl;
+    if (TK_Filter_Setup(setup_param, setup_res) != 0) {
+        std::cout << "[setup] call TK_Filter_Setup failed!" << std::endl;
         return -2;
     }
 #endif
@@ -58,8 +58,8 @@ int setup(PrFilterClient &client, std::vector<std::string> command, int &mm_len,
     return 0;
 }
 
-int token(PrFilterClient &client, std::vector<std::string> command, int mm_len, MK mk,
-          pr_filter_token_param &token_param, pr_filter_token_res &token_res) {
+int token(TKFilterClient &client, std::vector<std::string> command, int mm_len, MK mk,
+          tk_filter_token_param &token_param, tk_filter_token_res &token_res) {
     std::vector<std::string> words;
     for (int i = 1; i < command.size(); i++) {
         if (command[i] == "-word" || command[i] == "-words" || command[i] == "-w") {
@@ -80,8 +80,8 @@ int token(PrFilterClient &client, std::vector<std::string> command, int mm_len, 
     token_param.mk = std::move(mk);
     token_param.words = words;
     token_res.tokp_vec.clear();
-    if (PR_Filter_Token(token_param, token_res) != 0) {
-        std::cout << "[token] call PR_Filter_Token failed!" << std::endl;
+    if (TK_Filter_Token(token_param, token_res) != 0) {
+        std::cout << "[token] call TK_Filter_Token failed!" << std::endl;
         return -2;
     }
 #ifdef TEST
@@ -90,9 +90,9 @@ int token(PrFilterClient &client, std::vector<std::string> command, int mm_len, 
     return 0;
 }
 
-int resolve(PrFilterClient &client, const pr_filter_setup_res &setup_res, pr_filter_token_res token_res,
-            std::vector<std::string> words, pr_filter_resolve_param &resolve_param) {
-    // call PR_Filter_Search
+int resolve(TKFilterClient &client, const tk_filter_setup_res &setup_res, tk_filter_token_res token_res,
+            std::vector<std::string> words, tk_filter_resolve_param &resolve_param) {
+    // call TK_Filter_Search
     std::vector<std::string> c;
     std::vector<std::string> dc;
     std::vector<bool> vaild;
@@ -102,7 +102,7 @@ int resolve(PrFilterClient &client, const pr_filter_setup_res &setup_res, pr_fil
         return -1;
     }
 
-    //call PR_Filter_Resolve
+    //call TK_Filter_Resolve
     resolve_param.w1 = words[0];
     resolve_param.wn = words[words.size() - 1];
     resolve_param.mk = setup_res.mk;
@@ -110,8 +110,8 @@ int resolve(PrFilterClient &client, const pr_filter_setup_res &setup_res, pr_fil
     resolve_param.dc = dc;
     resolve_param.DX = setup_res.DX;
     std::vector<std::string> resolve_res;
-    if (PR_Filter_Resolve(resolve_param, resolve_res) != 0) {
-        std::cout << "[resolve] call PR_Filter_Resolve failed!" << std::endl;
+    if (TK_Filter_Resolve(resolve_param, resolve_res) != 0) {
+        std::cout << "[resolve] call TK_Filter_Resolve failed!" << std::endl;
         return -2;
     }
 

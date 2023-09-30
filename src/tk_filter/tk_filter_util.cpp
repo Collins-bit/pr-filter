@@ -1,4 +1,4 @@
-#include <pr_filter/pr_filter_util.h>
+#include <tk_filter/tk_filter_util.h>
 
 int find_w12_from_w(string word, string &w1, string &w2) {
     if (word == "") {
@@ -139,14 +139,14 @@ int D_AONTH(int ctr, string mplus, string dmplus, string &m) {
     return 0;
 }
 
-int Pr_Gen(vector<string> &key, vector<string> &w, int len, int doc,
+int TK_Gen(vector<string> &key, vector<string> &w, int len, int doc,
            vector<int> &P1, vector<int> &P2, vector<int> &P3, string &keyphi) {
     if (key.size() != 3 || w.size() != 2) {
-        cout << "[Pr_Gen] wrong input, the lenght of key should be 3 and w should be 2" << endl;
+        cout << "[TK_Gen] wrong input, the lenght of key should be 3 and w should be 2" << endl;
         return -1;
     }
     if (P1.size() != len || P2.size() != len || P3.size() != doc) {
-        cout << "[Pr_Gen] the lenght of P1 and P2 is not len, and P3 is not n" << endl;
+        cout << "[TK_Gen] the lenght of P1 and P2 is not len, and P3 is not n" << endl;
         return -1;
     }
     string keyw1 = H1(key[0], w[0]);
@@ -160,23 +160,23 @@ int Pr_Gen(vector<string> &key, vector<string> &w, int len, int doc,
     return 0;
 }
 
-int Pr_Enc(vector<string> &key, vector<string> &w, vector<string> &m, int len,
+int TK_Enc(vector<string> &key, vector<string> &w, vector<string> &m, int len,
            map<string, int> &ZX,
            vector<string> &c, vector<string> &dc, map<string, int> &DX) {
     if (m.size() == 0) {
         return 0;
     }
     if (m.size() != c.size() || c.size() != dc.size()) {
-        cout << "[Pr_Enc] wrong input, len(m) != len(c) != len(dc)" << endl;
+        cout << "[TK_Enc] wrong input, len(m) != len(c) != len(dc)" << endl;
         return -1;
     }
-    // call Pr-Gen(k1, k2, kphi, w1, w2, len, 2)
+    // call TK-Gen(k1, k2, kphi, w1, w2, len, 2)
     vector<int> P1(len);
     vector<int> P2(len);
     vector<int> P3(2);
     string keyphi;
-    if (Pr_Gen(key, w, len, 2, P1, P2, P3, keyphi) != 0) {
-        cout << "[Pr_Enc] run Pr_Gen err" << endl;
+    if (TK_Gen(key, w, len, 2, P1, P2, P3, keyphi) != 0) {
+        cout << "[TK_Enc] run TK_Gen err" << endl;
         return -1;
     }
     for (int i = 0; i < m.size(); i++) {
@@ -184,7 +184,7 @@ int Pr_Enc(vector<string> &key, vector<string> &w, vector<string> &m, int len,
         // (mi', dmi') = AONTH(mi, ctr)
         string mplus, dmplus;
         if (AONTH(ctr, m[i], mplus, dmplus) != 0) {
-            cout << "[Pr_Enc] run AONTH err" << endl;
+            cout << "[TK_Enc] run AONTH err" << endl;
             return -1;
         }
         // DX[(a,b)]<-ctr
@@ -203,23 +203,23 @@ int Pr_Enc(vector<string> &key, vector<string> &w, vector<string> &m, int len,
     return 0;
 }
 
-int Pr_Dec(vector<string> &key, vector<string> &w, vector<string> &c,
+int TK_Dec(vector<string> &key, vector<string> &w, vector<string> &c,
            vector<string> &dc,
            int len, map<string, int> &DX, vector<string> &m) {
     if (c.size() == 0 && dc.size() == 0) {
         return 0;
     }
     if (m.size() != c.size() || c.size() != dc.size()) {
-        cout << "[Pr_Dec] wrong input, len(m) != len(c) != len(dc)" << endl;
+        cout << "[TK_Dec] wrong input, len(m) != len(c) != len(dc)" << endl;
         return -1;
     }
-    // call Pr-Gen(k1, k2, kphi, w1, w2, len, 2)
+    // call TK-Gen(k1, k2, kphi, w1, w2, len, 2)
     vector<int> P1(len);
     vector<int> P2(len);
     vector<int> P3(2);
     string keyphi;
-    if (Pr_Gen(key, w, len, 2, P1, P2, P3, keyphi) != 0) {
-        cout << "[Pr_Dec] run Pr_Gen err" << endl;
+    if (TK_Gen(key, w, len, 2, P1, P2, P3, keyphi) != 0) {
+        cout << "[TK_Dec] run TK_Gen err" << endl;
         return -1;
     }
     for (int i = 0; i < c.size(); i++) {
@@ -237,21 +237,21 @@ int Pr_Dec(vector<string> &key, vector<string> &w, vector<string> &c,
         int ctr = DX[mplus + dmplus];
         // mi = D-AONTH(ctr, mi', dmi')
         if (D_AONTH(ctr, mplus, dmplus, m[i]) != 0) {
-            cout << "[Pr_Dec] run D_AONTH err" << endl;
+            cout << "[TK_Dec] run D_AONTH err" << endl;
             return -1;
         }
     }
     return 0;
 }
 
-int Pr_ReGen(vector<string> &key, vector<string> &w, int len,
+int TK_ReGen(vector<string> &key, vector<string> &w, int len,
              vector<int> &RetCK3, vector<vector<int>> &RetP2, vector<string> &RetKeyPhi) {
     if (key.size() != 3 || w.size() != 3) {
-        cout << "[Pr_ReGen] wrong input, the lenght of key should be 3 and w should be 3" << endl;
+        cout << "[TK_ReGen] wrong input, the lenght of key should be 3 and w should be 3" << endl;
         return -1;
     }
     if (RetP2.size() != 2 || RetKeyPhi.size() != 2) {
-        cout << "[Pr_ReGen] wrong output, the lenght of P2 and keypai should be 2 " << endl;
+        cout << "[TK_ReGen] wrong output, the lenght of P2 and keypai should be 2 " << endl;
         return -1;
     }
     vector<int> P1(len);
@@ -261,9 +261,9 @@ int Pr_ReGen(vector<string> &key, vector<string> &w, int len,
     vector<string> w_input(2);
     w_input[0] = w[0];
     w_input[1] = w[1];
-    // call Pr-Gen
-    if (Pr_Gen(key, w_input, len, 2, P1, P2, P3, keyphi) == -1) {
-        cout << "[Pr_ReGen] run Pr_Gen err" << endl;
+    // call TK-Gen
+    if (TK_Gen(key, w_input, len, 2, P1, P2, P3, keyphi) == -1) {
+        cout << "[TK_ReGen] run TK_Gen err" << endl;
         return -1;
     }
 
@@ -272,9 +272,9 @@ int Pr_ReGen(vector<string> &key, vector<string> &w, int len,
     vector<int> P3plus(2);
     string keyphiplus;
     w_input[1] = w[2];
-    // call Pr-Gen
-    if (Pr_Gen(key, w_input, len, 2, P1plus, P2plus, P3plus, keyphiplus) == -1) {
-        cout << "[Pr_ReGen] run Pr_Gen err" << endl;
+    // call TK-Gen
+    if (TK_Gen(key, w_input, len, 2, P1plus, P2plus, P3plus, keyphiplus) == -1) {
+        cout << "[TK_ReGen] run TK_Gen err" << endl;
         return -1;
     }
 
@@ -286,16 +286,16 @@ int Pr_ReGen(vector<string> &key, vector<string> &w, int len,
     return 0;
 }
 
-int Pr_ReEnc(vector<int> &CK3, vector<vector<int>> &P2, vector<string> &KeyPhi,
+int TK_ReEnc(vector<int> &CK3, vector<vector<int>> &P2, vector<string> &KeyPhi,
              vector<string> &c, vector<string> &dc,
              vector<string> &cplus, vector<string> &dcplus) {
     if (P2.size() != 2 || KeyPhi.size() != 2) {
-        cout << "[Pr_ReEnc] wrong output, the lenght of P2 should be 2, KeyPhi should be 2, P2 size: " << P2.size()
+        cout << "[TK_ReEnc] wrong output, the lenght of P2 should be 2, KeyPhi should be 2, P2 size: " << P2.size()
                   << ", KeyPhi size: " << KeyPhi.size() << endl;
         return -1;
     }
     if (c.size() != cplus.size() || dc.size() != dcplus.size() || c.size() != dc.size()) {
-        cout << "[Pr_ReEnc] the length of c, dc, cplus and dcplus should be equal" << endl;
+        cout << "[TK_ReEnc] the length of c, dc, cplus and dcplus should be equal" << endl;
         return -1;
     }
     for (int i = 0; i < c.size(); i++) {
