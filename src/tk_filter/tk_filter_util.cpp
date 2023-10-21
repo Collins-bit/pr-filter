@@ -160,159 +160,48 @@ int TK_Gen(vector<string> &key, vector<string> &w, int len, int doc,
     return 0;
 }
 
-int TK_Enc(vector<string> &key, vector<string> &w, vector<string> &m, int len,
-           map<string, int> &ZX,
-           vector<string> &c, vector<string> &dc, map<string, int> &DX) {
-    if (m.size() == 0) {
-        return 0;
-    }
-    if (m.size() != c.size() || c.size() != dc.size()) {
-        cout << "[TK_Enc] wrong input, len(m) != len(c) != len(dc)" << endl;
-        return -1;
-    }
-    // call TK-Gen(k1, k2, kphi, w1, w2, len, 2)
-    vector<int> P1(len);
-    vector<int> P2(len);
-    vector<int> P3(2);
-    string keyphi;
-    if (TK_Gen(key, w, len, 2, P1, P2, P3, keyphi) != 0) {
-        cout << "[TK_Enc] run TK_Gen err" << endl;
-        return -1;
-    }
-    for (int i = 0; i < m.size(); i++) {
-        int ctr = ZX[m[i]];
-        // (mi', dmi') = AONTH(mi, ctr)
-        string mplus, dmplus;
-        if (AONTH(ctr, m[i], mplus, dmplus) != 0) {
-            cout << "[TK_Enc] run AONTH err" << endl;
-            return -1;
-        }
-        // DX[(a,b)]<-ctr
-        DX.insert(pair<string, int>{mplus + dmplus, ctr});
-        // (mi', dmi')= Perm(P3, (mi', dmi'))
-        vector<string> pin{mplus, dmplus};
-        vector<string> dpin(2);
-        Permutation2(0, P3, pin, dpin);
-        mplus = dpin[0];
-        dmplus = dpin[1];
-        // ci = Perm(Pi, mi') ^ Perm(P2, kphi)
-        c[i] = Xor(Permutation(P1.size(), P1, mplus), Permutation(P2.size(), P2, keyphi));
-        // dci = Perm(Pi, dmi') ^ Perm(P2, ci)
-        dc[i] = Xor(Permutation(P1.size(), P1, dmplus), Permutation(P2.size(), P2, c[i]));
-    }
+int TK_Enc(string kt, string a, string b, string v, string &c) {
+    int l = v.size();
+    string key_ab_t = H1(kt, a + b);
+    vector<int> p_ab(l);
+    Permutationkey_Gen(key_ab_t, l, p_ab);
+    string ctr = H1(a, v);
+    string rnd;
+    encrypt(kt, ctr, rnd);
+    string v_plus = Xor(rnd, v);
+    c = Permutation(p_ab.size(), p_ab, v_plus);
     return 0;
 }
 
-int TK_Dec(vector<string> &key, vector<string> &w, vector<string> &c,
-           vector<string> &dc,
-           int len, map<string, int> &DX, vector<string> &m) {
-    if (c.size() == 0 && dc.size() == 0) {
-        return 0;
-    }
-    if (m.size() != c.size() || c.size() != dc.size()) {
-        cout << "[TK_Dec] wrong input, len(m) != len(c) != len(dc)" << endl;
-        return -1;
-    }
-    // call TK-Gen(k1, k2, kphi, w1, w2, len, 2)
-    vector<int> P1(len);
-    vector<int> P2(len);
-    vector<int> P3(2);
-    string keyphi;
-    if (TK_Gen(key, w, len, 2, P1, P2, P3, keyphi) != 0) {
-        cout << "[TK_Dec] run TK_Gen err" << endl;
-        return -1;
-    }
-    for (int i = 0; i < c.size(); i++) {
-        // dmi' = DePerm(Pi, dci ^ Perm(P2, ci))
-        string dmplus = De_Permutation(P1.size(), P1, Xor(dc[i], Permutation(P2.size(), P2, c[i])));
-        // mi' = DePerm(Pi, ci ^ Perm(P2, kphi))
-        string mplus = De_Permutation(P1.size(), P1, Xor(c[i], Permutation(P2.size(), P2, keyphi)));
-        // (mi', dmi')= DePerm(P3, (mi', dmi'))
-        vector<string> dpin{mplus, dmplus};
-        vector<string> pin(2);
-        De_Permutation2(0, P3, dpin, pin);
-        mplus = pin[0];
-        dmplus = pin[1];
-        // find from dx
-        int ctr = DX[mplus + dmplus];
-        // mi = D-AONTH(ctr, mi', dmi')
-        if (D_AONTH(ctr, mplus, dmplus, m[i]) != 0) {
-            cout << "[TK_Dec] run D_AONTH err" << endl;
-            return -1;
-        }
-    }
+int TK_Dec(string kt, string kp, string a, string b, string c, string ectr, string &v) {
+    int l = c.size();
+    string key_ab_t = H1(kt, a + b);
+    vector<int> p_ab(l);
+    Permutationkey_Gen(key_ab_t, l, p_ab);
+    string ctr, rnd;
+    decrypt(kp, ectr, ctr);
+    encrypt(kt, ctr, rnd);
+    string v_plus = De_Permutation(p_ab.size(), p_ab, c);
+    v = Xor(v_plus, rnd);
     return 0;
 }
 
-int TK_ReGen(vector<string> &key, vector<string> &w, int len,
-             vector<int> &RetCK3, vector<vector<int>> &RetP2, vector<string> &RetKeyPhi) {
-    if (key.size() != 3 || w.size() != 3) {
-        cout << "[TK_ReGen] wrong input, the lenght of key should be 3 and w should be 3" << endl;
+int TK_ReGen(string kt, string a, string b, string w, int l, vector<int> &ck_w) {
+    if(ck_w.size()!=l){
+        cout << "[TK_ReGen] the lenght of ck_w should equal to l, ck_w size: " << ck_w.size() << endl;
         return -1;
     }
-    if (RetP2.size() != 2 || RetKeyPhi.size() != 2) {
-        cout << "[TK_ReGen] wrong output, the lenght of P2 and keypai should be 2 " << endl;
-        return -1;
-    }
-    vector<int> P1(len);
-    vector<int> P2(len);
-    vector<int> P3(2);
-    string keyphi;
-    vector<string> w_input(2);
-    w_input[0] = w[0];
-    w_input[1] = w[1];
-    // call TK-Gen
-    if (TK_Gen(key, w_input, len, 2, P1, P2, P3, keyphi) == -1) {
-        cout << "[TK_ReGen] run TK_Gen err" << endl;
-        return -1;
-    }
-
-    vector<int> P1plus(len);
-    vector<int> P2plus(len);
-    vector<int> P3plus(2);
-    string keyphiplus;
-    w_input[1] = w[2];
-    // call TK-Gen
-    if (TK_Gen(key, w_input, len, 2, P1plus, P2plus, P3plus, keyphiplus) == -1) {
-        cout << "[TK_ReGen] run TK_Gen err" << endl;
-        return -1;
-    }
-
-    RetCK3 = Find_CK(2, P3, P3plus); // CK3=FindCk(P3, P3')
-    RetP2[0] = P2;                   // P2
-    RetP2[1] = P2plus;               // P2'
-    RetKeyPhi[0] = keyphi;           // keyfai
-    RetKeyPhi[1] = keyphiplus;       // keyfai'
+    string k_ab_t = H1(kt, a+b);
+    string k_aw_t = H1(kt, a+w);
+    vector<int> p1(l);
+    Permutationkey_Gen(k_ab_t, l, p1);
+    vector<int> p2(l);
+    Permutationkey_Gen(k_aw_t, l, p2);
+    ck_w = Find_CK(l, p1, p2);
     return 0;
 }
 
-int TK_ReEnc(vector<int> &CK3, vector<vector<int>> &P2, vector<string> &KeyPhi,
-             vector<string> &c, vector<string> &dc,
-             vector<string> &cplus, vector<string> &dcplus) {
-    if (P2.size() != 2 || KeyPhi.size() != 2) {
-        cout << "[TK_ReEnc] wrong output, the lenght of P2 should be 2, KeyPhi should be 2, P2 size: " << P2.size()
-                  << ", KeyPhi size: " << KeyPhi.size() << endl;
-        return -1;
-    }
-    if (c.size() != cplus.size() || dc.size() != dcplus.size() || c.size() != dc.size()) {
-        cout << "[TK_ReEnc] the length of c, dc, cplus and dcplus should be equal" << endl;
-        return -1;
-    }
-    for (int i = 0; i < c.size(); i++) {
-        // dci' = dci ^ Perm(P2, ci)
-        dcplus[i] = Xor(dc[i], Permutation(P2[0].size(), P2[0], c[i]));
-        // ci' = ci ^ Perm(P2, KeyPhi)
-        cplus[i] = Xor(c[i], Permutation(P2[0].size(), P2[0], KeyPhi[0]));
-        // (ci', dci') = Perm(CK3, (ci', dci'))
-        vector<string> pin{cplus[i], dcplus[i]};
-        vector<string> dpin(2);
-        Permutation2(0, CK3, pin, dpin);
-        cplus[i] = dpin[0];
-        dcplus[i] = dpin[1];
-        // ci'= ci' ^ Perm(P2', keyphi')
-        cplus[i] = Xor(cplus[i], Permutation(P2[1].size(), P2[1], KeyPhi[1]));
-        // dci'= dci' ^ Perm(P2', ci-1')
-        dcplus[i] = Xor(dcplus[i], Permutation(P2[1].size(), P2[1], cplus[i]));
-    }
+int TK_ReEnc(vector<int> &ck_w, string c, string &c_plus) {
+    c_plus = Permutation(ck_w.size(), ck_w, c);
     return 0;
 }

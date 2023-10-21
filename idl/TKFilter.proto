@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package TKFilter;
+
+import "google/protobuf/empty.proto";
+
+service TKFilterService {
+
+    // Setup Emmt
+    rpc SetupEmmt (stream SetupEmmtRequest) returns (google.protobuf.Empty) {}
+
+    // Setup Xset
+    rpc SetupXset (stream SetupXsetRequest) returns (google.protobuf.Empty) {}
+
+    // Search
+    rpc Search (SearchRequest) returns (SearchResponse) {}
+}
+
+message cbc
+{
+    repeated bytes c = 1;
+    repeated bytes dc = 2;
+}
+
+message key_re_d {
+    bytes kx = 1;
+    repeated int32 ck = 2;
+    repeated int32 p2 = 3;
+    repeated int32 p2_plus = 4;
+    bytes key_phi = 5;
+    bytes key_phi_plus = 6;
+}
+
+message SetupEmmtRequest
+{
+    bytes key = 1;
+    cbc value = 2;
+}
+
+message SetupXsetRequest
+{
+    bytes xset_v = 1;
+}
+
+message SearchRequest
+{
+    bytes tokp = 1;
+    bytes k_w12_enc = 2;
+    repeated key_re_d tokp_vec = 3;
+}
+
+message SearchResponse {
+    repeated bytes c = 1;
+    repeated bytes dc = 2;
+}
