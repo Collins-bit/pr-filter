@@ -6,18 +6,17 @@
 using namespace CryptoPP;
 using namespace std;
 
-void sEMM_Search(string tokp, map<string, cdc> &EMMp, cdc &tags);
+void sEMM_Search(string tokp, map<string, c_ectr> &EMMp, c_ectr &tags);
 
 typedef struct {
     string tokp;
-    string k_w12_enc;
-    vector<key_re_d> tokp_vec;
+    vector<vector<int>> ck;
     EMM emm;
+
 } tk_filter_search_param;
 
 typedef struct {
-    vector<string> c;
-    vector<string> dc;
+    vector<c_ectr> ct;
 } tk_filter_search_res;
 
 int TK_Filter_Search(tk_filter_search_param &param, tk_filter_search_res &res);

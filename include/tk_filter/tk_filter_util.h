@@ -25,17 +25,19 @@ struct cdc {
 
 typedef struct cdc cdc;
 
-typedef struct {
-    map<string, cdc> EMMt;
-    multiset<string> Xset;
-} EMM;
+struct c_ectr {
+    string c;
+    string ectr;
+    c_ectr() {}
+    c_ectr(string c, string ectr) : c(c), ectr(ectr) {}
+};
+
+typedef struct c_ectr c_ectr;
 
 typedef struct {
-    string kx;
-    vector<int> CK;
-    vector<vector<int>> P2;
-    vector<string> KeyPhi;
-} key_re_d;
+    map<string, vector<c_ectr>> EMMt;
+    multiset<string> X;
+} EMM;
 
 // get w1 and w2 from word
 int find_w12_from_w(string word, string &w1, string &w2);

@@ -168,7 +168,7 @@ int TK_Enc(string kt, string a, string b, string v, string &c) {
     string ctr = H1(a, v);
     string rnd;
     encrypt(kt, ctr, rnd);
-    string v_plus = Xor(rnd, v);
+    string v_plus = Xor(rnd, v).substr(0, v.size());
     c = Permutation(p_ab.size(), p_ab, v_plus);
     return 0;
 }
@@ -182,7 +182,7 @@ int TK_Dec(string kt, string kp, string a, string b, string c, string ectr, stri
     decrypt(kp, ectr, ctr);
     encrypt(kt, ctr, rnd);
     string v_plus = De_Permutation(p_ab.size(), p_ab, c);
-    v = Xor(v_plus, rnd);
+    v = Xor(v_plus, rnd).substr(0, c.size());
     return 0;
 }
 
