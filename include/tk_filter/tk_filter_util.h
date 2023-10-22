@@ -15,11 +15,8 @@ using namespace std;
 struct cdc {
     vector<string> c;
     vector<string> dc;
-
     cdc() {}
-
     cdc(vector<string> c, vector<string> dc) : c(c), dc(dc) {}
-
     int size() { return c.size(); }
 };
 
