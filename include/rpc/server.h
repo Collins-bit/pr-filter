@@ -22,7 +22,7 @@ using TKFilter::SetupXsetRequest;
 using TKFilter::SearchRequest;
 using TKFilter::SearchResponse;
 
-extern std::map<std::string, cdc> EMMt;
+extern std::map<string, std::vector<c_ectr>> EMMt;
 extern std::multiset<std::string> Xset;
 
 class TKFilterServiceImpl final : public TKFilterService::Service {

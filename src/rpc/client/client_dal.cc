@@ -1,6 +1,6 @@
 #include <rpc/client.h>
 
-int TKFilterClient::SendEmmt(const std::map<std::string, cdc> &EMMt) {
+int TKFilterClient::SendEmmt(const std::map<std::string, std::vector<c_ectr>> &EMMt) {
     ClientContext context;
     std::unique_ptr<grpc::ClientWriter<SetupEmmtRequest> > writer;
     SetupEmmtRequest request;
@@ -8,18 +8,17 @@ int TKFilterClient::SendEmmt(const std::map<std::string, cdc> &EMMt) {
     writer = stub_->SetupEmmt(&context, &response);
     for (const auto &emmt: EMMt) {
         request.set_key(emmt.first);
-        auto *value = new TKFilter::cbc();
-        for (const auto &i: emmt.second.c) {
-            value->add_c(i);
+        for (const auto &i: emmt.second) {
+            auto *value = request.add_value();
+            value->set_c(i.c);
+            value->set_ectr(i.ectr);
         }
-        for (const auto &i: emmt.second.dc) {
-            value->add_dc(i);
-        }
-        request.set_allocated_value(value);
         if (!writer->Write(request)) {
             std::cout << "send emmt failed, the stream has been closed" << std::endl;
             break;
         }
+        request.clear_key();
+        request.clear_value();
     }
     writer->WritesDone();
     grpc::Status status = writer->Finish();
@@ -54,27 +53,16 @@ int TKFilterClient::SendXset(const std::multiset<std::string> &Xset) {
     }
 }
 
-int TKFilterClient::SearchInServer(tk_filter_token_res token_res, std::vector<std::string> &c,
-                                   std::vector<std::string> &dc, std::vector<bool> &vaild) {
+int TKFilterClient::SearchInServer(tk_filter_token_res token_res, std::vector<c_ectr> &ct) {
     ClientContext context;
     SearchRequest request;
     SearchResponse response;
     request.set_tokp(token_res.tokp);
-    request.set_k_w12_enc(token_res.k_w12_enc);
-    for (auto tp: token_res.tokp_vec) {
-        auto *key_re_d = request.add_tokp_vec();
-        key_re_d->set_kx(tp.kx);
-        for (int ck_val: tp.CK) {
-            key_re_d->add_ck(ck_val);
+    for (const auto& ck_i: token_res.ck) {
+        auto *cks = request.add_ck();
+        for(const auto& i: ck_i){
+            cks->add_ck(i);
         }
-        for (int p2_val: tp.P2[0]) {
-            key_re_d->add_p2(p2_val);
-        }
-        for (int p2_plus_val: tp.P2[1]) {
-            key_re_d->add_p2_plus(p2_plus_val);
-        }
-        key_re_d->set_key_phi(tp.KeyPhi[0]);
-        key_re_d->set_key_phi_plus(tp.KeyPhi[1]);
     }
     Status status = stub_->Search(&context, request, &response);
 
@@ -82,11 +70,9 @@ int TKFilterClient::SearchInServer(tk_filter_token_res token_res, std::vector<st
         std::cout << "search failed: " << status.error_code() << ", result: " << status.error_message() << std::endl;
         return -1;
     }
-    for (const auto &c_val: response.c()) {
-        c.push_back(c_val);
-    }
-    for (const auto &dc_val: response.dc()) {
-        dc.push_back(dc_val);
+    for (const auto &c_val: response.ct()) {
+        auto cectr = c_ectr(c_val.c(), c_val.ectr());
+        ct.push_back(cectr);
     }
     return 0;
 }

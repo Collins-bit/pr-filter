@@ -28,11 +28,11 @@ class TKFilterClient {
 public:
     TKFilterClient(std::shared_ptr<Channel> channel) : stub_(TKFilterService::NewStub(channel)) {}
 
-    int SendEmmt(const std::map<std::string, cdc> &EMMt);
+    int SendEmmt(const std::map<std::string, std::vector<c_ectr>> &EMMt);
 
     int SendXset(const std::multiset<std::string> &Xset);
 
-    int SearchInServer(tk_filter_token_res token_res, std::vector<std::string> &c, std::vector<std::string> &dc, std::vector<bool> &vaild);
+    int SearchInServer(tk_filter_token_res token_res, std::vector<c_ectr> &ct);
 
 private:
     std::unique_ptr<TKFilterService::Stub> stub_;

@@ -25,7 +25,6 @@ int setup(TKFilterClient &client, std::vector<std::string> command, int &mm_len,
     // init setup_param
     setup_param.MM = MM;
     setup_param.lambda = keylen;
-    setup_param.mu = keylen;
     // call TK_Filter_Setup
 #ifdef TEST
     TimeUtil time_util;
@@ -51,7 +50,7 @@ int setup(TKFilterClient &client, std::vector<std::string> command, int &mm_len,
         std::cout << "[setup] send emmt to server failed!" << std::endl;
         return -3;
     }
-    if (client.SendXset(setup_res.emm.Xset) != 0) {
+    if (client.SendXset(setup_res.emm.X) != 0) {
         std::cout << "[setup] send xset to server failed!" << std::endl;
         return -3;
     }
@@ -79,7 +78,7 @@ int token(TKFilterClient &client, std::vector<std::string> command, int mm_len, 
     token_param.len = mm_len;
     token_param.mk = std::move(mk);
     token_param.words = words;
-    token_res.tokp_vec.clear();
+    token_res.ck.clear();
     if (TK_Filter_Token(token_param, token_res) != 0) {
         std::cout << "[token] call TK_Filter_Token failed!" << std::endl;
         return -2;
@@ -93,10 +92,8 @@ int token(TKFilterClient &client, std::vector<std::string> command, int mm_len, 
 int resolve(TKFilterClient &client, const tk_filter_setup_res &setup_res, tk_filter_token_res token_res,
             std::vector<std::string> words, tk_filter_resolve_param &resolve_param) {
     // call TK_Filter_Search
-    std::vector<std::string> c;
-    std::vector<std::string> dc;
-    std::vector<bool> vaild;
-    client.SearchInServer(std::move(token_res), c, dc, vaild);
+    std::vector<c_ectr> ct;
+    client.SearchInServer(std::move(token_res), ct);
     if (words.size() < 2) {
         std::cout << "[resolve] you should token first!" << std::endl;
         return -1;
@@ -106,9 +103,7 @@ int resolve(TKFilterClient &client, const tk_filter_setup_res &setup_res, tk_fil
     resolve_param.w1 = words[0];
     resolve_param.wn = words[words.size() - 1];
     resolve_param.mk = setup_res.mk;
-    resolve_param.c = c;
-    resolve_param.dc = dc;
-    resolve_param.DX = setup_res.DX;
+    resolve_param.ct = ct;
     std::vector<std::string> resolve_res;
     if (TK_Filter_Resolve(resolve_param, resolve_res) != 0) {
         std::cout << "[resolve] call TK_Filter_Resolve failed!" << std::endl;
