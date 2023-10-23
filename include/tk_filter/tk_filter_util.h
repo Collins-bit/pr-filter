@@ -1,5 +1,5 @@
-#ifndef PR_FILTER_UTIL
-#define PR_FILTER_UTIL
+#ifndef TK_FILTER_UTIL
+#define TK_FILTER_UTIL
 
 #include <iostream>
 #include <time.h>
@@ -15,27 +15,26 @@ using namespace std;
 struct cdc {
     vector<string> c;
     vector<string> dc;
-
     cdc() {}
-
     cdc(vector<string> c, vector<string> dc) : c(c), dc(dc) {}
-
     int size() { return c.size(); }
 };
 
 typedef struct cdc cdc;
 
-typedef struct {
-    map<string, cdc> EMMt;
-    multiset<string> Xset;
-} EMM;
+struct c_ectr {
+    string c;
+    string ectr;
+    c_ectr() {}
+    c_ectr(string c, string ectr) : c(c), ectr(ectr) {}
+};
+
+typedef struct c_ectr c_ectr;
 
 typedef struct {
-    string kx;
-    vector<int> CK;
-    vector<vector<int>> P2;
-    vector<string> KeyPhi;
-} key_re_d;
+    map<string, vector<c_ectr>> EMMt;
+    multiset<string> X;
+} EMM;
 
 // get w1 and w2 from word
 int find_w12_from_w(string word, string &w1, string &w2);
@@ -62,20 +61,15 @@ int AONTH(int ctr, string m, string &mplus, string &dmplus);
 
 int D_AONTH(int ctr, string mplus, string dmplus, string &m);
 
-int Pr_Gen(vector<string> &key, vector<string> &w, int len, int doc, vector<int> &P1,
+int TK_Gen(vector<string> &key, vector<string> &w, int len, int doc, vector<int> &P1,
            vector<int> &P2, vector<int> &P3, string &keyphi);
 
-int Pr_Enc(vector<string> &key, vector<string> &w, vector<string> &m, int len, map<string, int> &ZX,
-           vector<string> &c, vector<string> &dc, map<string, int> &DX);
+int TK_Enc(string kt, string a, string b, string v, string &c);
 
-int Pr_Dec(vector<string> &key, vector<string> &w, vector<string> &c,
-           vector<string> &dc, int len, map<string, int> &DX, vector<string> &m);
+int TK_Dec(string kt, string kp, string a, string b, string c, string ectr, string &v);
 
-int Pr_ReGen(vector<string> &key, vector<string> &w, int len, vector<int> &RetCK3,
-             vector<vector<int>> &RetP2, vector<string> &RetKeyPhi);
+int TK_ReGen(string kt, string a, string b, string w, int l, vector<int> &ck_w);
 
-int Pr_ReEnc(vector<int> &CK3, vector<vector<int>> &P2, vector<string> &KeyPhi,
-             vector<string> &c, vector<string> &dc, vector<string> &cplus,
-             vector<string> &dcplus);
+int TK_ReEnc(vector<int> &ck_w, string c, string &c_plus);
 
-#endif // PR_FILTER_UTIL
+#endif // TK_FILTER_UTIL

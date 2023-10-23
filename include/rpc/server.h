@@ -1,14 +1,14 @@
-#ifndef PRFILTER_SERVER_H
-#define PRFILTER_SERVER_H
+#ifndef TKFILTER_SERVER_H
+#define TKFILTER_SERVER_H
 
 #include <iostream>
 #include <memory>
 #include <string>
 
 #include <grpcpp/grpcpp.h>
-#include "PrFilter.grpc.pb.h"
+#include "TKFilter.grpc.pb.h"
 
-#include <pr_filter/pr_filter_server.h>
+#include <tk_filter/tk_filter_server.h>
 #include <util/time_util.h>
 
 using grpc::Server;
@@ -16,16 +16,16 @@ using grpc::ServerBuilder;
 using grpc::ServerContext;
 using grpc::ServerReader;
 using grpc::Status;
-using PrFilter::PrFilterService;
-using PrFilter::SetupEmmtRequest;
-using PrFilter::SetupXsetRequest;
-using PrFilter::SearchRequest;
-using PrFilter::SearchResponse;
+using TKFilter::TKFilterService;
+using TKFilter::SetupEmmtRequest;
+using TKFilter::SetupXsetRequest;
+using TKFilter::SearchRequest;
+using TKFilter::SearchResponse;
 
-extern std::map<std::string, cdc> EMMt;
+extern std::map<string, std::vector<c_ectr>> EMMt;
 extern std::multiset<std::string> Xset;
 
-class PrFilterServiceImpl final : public PrFilterService::Service {
+class TKFilterServiceImpl final : public TKFilterService::Service {
     Status SetupEmmt(ServerContext *context, ServerReader<SetupEmmtRequest> *reader, google::protobuf::Empty*) override;
 
     Status SetupXset(ServerContext *context, ServerReader<SetupXsetRequest> *reader, google::protobuf::Empty*) override;
@@ -33,4 +33,4 @@ class PrFilterServiceImpl final : public PrFilterService::Service {
     Status Search(ServerContext *context, const SearchRequest *request, SearchResponse *searchResponse) override;
 };
 
-#endif //PRFILTER_SERVER_H
+#endif //TKFILTER_SERVER_H

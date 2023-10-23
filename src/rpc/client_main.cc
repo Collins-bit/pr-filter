@@ -1,12 +1,12 @@
 #include <rpc/client.h>
 
-void handleInputParam(PrFilterClient &client) {
+void handleInputParam(TKFilterClient &client) {
     int mm_len;
-    pr_filter_setup_param setup_param;
-    pr_filter_setup_res setup_res;
-    pr_filter_token_param token_param;
-    pr_filter_token_res token_res;
-    pr_filter_resolve_param resolve_param;
+    tk_filter_setup_param setup_param;
+    tk_filter_setup_res setup_res;
+    tk_filter_token_param token_param;
+    tk_filter_token_res token_res;
+    tk_filter_resolve_param resolve_param;
     while (true) {
         std::cout << "please input command (support setup, token, resolve, conj, mlemm, stop): \n";
         std::string command;
@@ -44,7 +44,7 @@ void handleInputParam(PrFilterClient &client) {
 }
 
 int main(int argc, char **argv) {
-    PrFilterClient client(grpc::CreateChannel("127.0.0.1:12520", grpc::InsecureChannelCredentials()));
+    TKFilterClient client(grpc::CreateChannel("127.0.0.1:12520", grpc::InsecureChannelCredentials()));
     handleInputParam(client);
     return 0;
 }

@@ -1,5 +1,18 @@
 #include <mlemm/mlemm.h>
 
+void mlemm_sEMM_Setup(int lambda, map<string, cdc> &MMp, string &mskt, map<string, cdc> &EMMp) {
+    mskt = Gen_RandKey(lambda);
+    for (const auto& mmp: MMp) {
+        string key_cipher;
+        encrypt(mskt, mmp.first, key_cipher);
+        EMMp[key_cipher] = mmp.second;
+    }
+}
+
+void mlemm_sEMM_Search(string tokp, map<string, cdc> &EMMp, cdc &tags) {
+    tags = EMMp[tokp];
+}
+
 int find_w123_from_w(const string &word, string &w1, string &w2, string &w3) {
     size_t pos1 = word.find("∩");
     if (pos1 == string::npos) {
@@ -87,7 +100,7 @@ int MLEMM_Setup(mlemm_setup_param &param, mlemm_setup_res &res) {
         }
     }
     // mskt, EMMp = sEMM_Setup(1_lamda, MMp)
-    sEMM_Setup(param.lambda, MMt, res.mskp, res.EMMp);
+    mlemm_sEMM_Setup(param.lambda, MMt, res.mskp, res.EMMp);
     return 0;
 }
 
@@ -116,7 +129,7 @@ int MLEMM_Search(mlemm_search_param &param, vector<string> &ev) {
     ev.clear();
     // tagl = sEMM.Search(tokp, EMMp)
     cdc tags_l;
-    sEMM_Search(param.tokp, param.EMMp, tags_l);
+    mlemm_sEMM_Search(param.tokp, param.EMMp, tags_l);
     // tagi = Dec(k_l12_enc, etagl)
     vector<string> tag(tags_l.c.size());
     for (int i = 0; i < tags_l.c.size(); i++) {

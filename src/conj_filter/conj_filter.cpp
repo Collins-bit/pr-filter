@@ -1,5 +1,18 @@
 #include <conj_filter/conj_filter.h>
 
+void conj_sEMM_Setup(int lambda, map<string, cdc> &MMp, string &mskt, map<string, cdc> &EMMp) {
+    mskt = Gen_RandKey(lambda);
+    for (const auto& mmp: MMp) {
+        string key_cipher;
+        encrypt(mskt, mmp.first, key_cipher);
+        EMMp[key_cipher] = mmp.second;
+    }
+}
+
+void conj_sEMM_Search(string tokp, map<string, cdc> &EMMp, cdc &tags) {
+    tags = EMMp[tokp];
+}
+
 int Conj_Filter_Setup(conj_filter_setup_param &param, conj_filter_setup_res &res) {
     // clear EMM and DX
     res.EMMp.clear();
@@ -43,7 +56,7 @@ int Conj_Filter_Setup(conj_filter_setup_param &param, conj_filter_setup_res &res
         MMt[mm.first] = cdc(etag, ev);
     }
     // mskt, EMMp = sEMM_Setup(1_lamda, MMp)
-    sEMM_Setup(param.lambda, MMt, res.mskp, res.EMMp);
+    conj_sEMM_Setup(param.lambda, MMt, res.mskp, res.EMMp);
     return 0;
 }
 
@@ -72,7 +85,7 @@ int Conj_Filter_Search(conj_filter_search_param &param, vector<string> &ev) {
     ev.clear();
     // tagl = sEMM.Search(tokp, EMMp)
     cdc tags_l;
-    sEMM_Search(param.tokp, param.EMMp, tags_l);
+    conj_sEMM_Search(param.tokp, param.EMMp, tags_l);
     // tagi = Dec(k_l12_enc, etagl)
     vector<string> tag(tags_l.c.size());
     for (int i = 0; i < tags_l.c.size(); i++) {

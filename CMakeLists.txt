@@ -1,25 +1,25 @@
 cmake_minimum_required(VERSION 3.5.0)
 
-project(PrFilter C CXX)
+project(TKFilter C CXX)
 
 include(common.cmake)
 
-get_filename_component(pr_proto "${CMAKE_SOURCE_DIR}/idl/PrFilter.proto" ABSOLUTE)
-get_filename_component(pr_proto_path "${pr_proto}" PATH)
+get_filename_component(tk_proto "${CMAKE_SOURCE_DIR}/idl/TKFilter.proto" ABSOLUTE)
+get_filename_component(tk_proto_path "${tk_proto}" PATH)
 
-set(pr_proto_srcs "${CMAKE_CURRENT_BINARY_DIR}/PrFilter.pb.cc")
-set(pr_proto_hdrs "${CMAKE_CURRENT_BINARY_DIR}/PrFilter.pb.h")
-set(pr_grpc_srcs "${CMAKE_CURRENT_BINARY_DIR}/PrFilter.grpc.pb.cc")
-set(pr_grpc_hdrs "${CMAKE_CURRENT_BINARY_DIR}/PrFilter.grpc.pb.h")
+set(tk_proto_srcs "${CMAKE_CURRENT_BINARY_DIR}/TKFilter.pb.cc")
+set(tk_proto_hdrs "${CMAKE_CURRENT_BINARY_DIR}/TKFilter.pb.h")
+set(tk_grpc_srcs "${CMAKE_CURRENT_BINARY_DIR}/TKFilter.grpc.pb.cc")
+set(tk_grpc_hdrs "${CMAKE_CURRENT_BINARY_DIR}/TKFilter.grpc.pb.h")
 add_custom_command(
-      OUTPUT "${pr_proto_srcs}" "${pr_proto_hdrs}" "${pr_grpc_srcs}" "${pr_grpc_hdrs}"
+      OUTPUT "${tk_proto_srcs}" "${tk_proto_hdrs}" "${tk_grpc_srcs}" "${tk_grpc_hdrs}"
       COMMAND ${_PROTOBUF_PROTOC}
       ARGS --grpc_out "${CMAKE_CURRENT_BINARY_DIR}"
         --cpp_out "${CMAKE_CURRENT_BINARY_DIR}"
-        -I "${pr_proto_path}"
+        -I "${tk_proto_path}"
         --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}"
-        "${pr_proto}"
-      DEPENDS "${pr_proto}")
+        "${tk_proto}"
+      DEPENDS "${tk_proto}")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/binary)
 
@@ -34,7 +34,7 @@ ADD_SUBDIRECTORY(test)
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-aux_source_directory(src/pr_filter crypto_srcs)
+aux_source_directory(src/tk_filter crypto_srcs)
 aux_source_directory(src/conj_filter crypto_srcs)
 aux_source_directory(src/melmm crypto_srcs)
 aux_source_directory(src/util crypto_srcs)
@@ -42,13 +42,13 @@ aux_source_directory(src/util crypto_srcs)
 aux_source_directory(src/rpc/server crypto_srcs)
 aux_source_directory(src/rpc/client crypto_srcs)
 
-add_library(pr_grpc_proto
-  ${pr_grpc_srcs}
-  ${pr_grpc_hdrs}
-  ${pr_proto_srcs}
-  ${pr_proto_hdrs}
+add_library(tk_grpc_proto
+  ${tk_grpc_srcs}
+  ${tk_grpc_hdrs}
+  ${tk_proto_srcs}
+  ${tk_proto_hdrs}
   ${crypto_srcs})
-target_link_libraries(pr_grpc_proto
+target_link_libraries(tk_grpc_proto
   ${_REFLECTION}
   ${_GRPC_GRPCPP}
   ${_PROTOBUF_LIBPROTOBUF})
@@ -56,7 +56,7 @@ target_link_libraries(pr_grpc_proto
 foreach(_target client server)
   add_executable(${_target} "./src/rpc/${_target}_main.cc")
   target_link_libraries(${_target}
-    pr_grpc_proto
+    tk_grpc_proto
     ${_REFLECTION}
     ${_GRPC_GRPCPP}
     ${_PROTOBUF_LIBPROTOBUF}
