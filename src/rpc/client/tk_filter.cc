@@ -29,7 +29,7 @@ int setup(TKFilterClient &client, std::vector<std::string> command, int &mm_len,
 #ifdef TEST
     TimeUtil time_util;
     time_util.initTime();
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 100; i++) {
         if (TK_Filter_Setup(setup_param, setup_res) != 0) {
             std::cout << "[setup] call TK_Filter_Setup failed!" << std::endl;
             return -2;

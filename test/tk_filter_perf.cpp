@@ -29,7 +29,7 @@ int main() {
             return -2;
         }
     }
-    time_util1.endTime("conj setup process", 100);
+    time_util1.endTime("conj setup process", 1);
     emmtChange2File(tk_filter_setup_res.emm.EMMt, "./emmt.txt");
     xsetChange2File(tk_filter_setup_res.emm.X, "./xset.txt");
     std::cout << "setup success!\n" << std::endl;
@@ -55,13 +55,13 @@ int main() {
     tk_filter_search_res tk_filter_search_res;
     TimeUtil time_util2;
     time_util2.initTime();
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 10; i++) {
         if (TK_Filter_Search(tk_filter_search_param, tk_filter_search_res)!= 0) {
             std::cout << "call TK_Filter_Search failed!" << std::endl;
             return -2;
         }
     }
-    time_util2.endTime("search process", 10000);
+    time_util2.endTime("search process", 10);
     std::cout << "search success!\n" << std::endl;
 
     // call Conj_Filter_Resolve
