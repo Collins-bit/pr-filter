@@ -1,3 +1,3 @@
-name∩age id1 id2
-name∩sex id2 id3
-name∩race id2
+name∩age id1 id2 id3
+name∩sex id1 id2 id3
+age∩sex id1 id2 id3
