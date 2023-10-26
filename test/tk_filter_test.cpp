@@ -9,9 +9,9 @@ int main() {
     map<string, vector<string>> MM = {
             {"name∩age",   {"id1", "id2"}},
             {"name∩sex", {"id2", "id3"}},
-            {"name∩race",  {"id2"}},
+            {"age∩sex",  {"id2"}},
     };
-    vector<string> words = {"name", "age", "sex", "race"};
+    vector<string> words = {"name", "age", "sex"};
 
     // call TK_Filter_Setup
     tk_filter_setup_param tk_filter_setup_param;
