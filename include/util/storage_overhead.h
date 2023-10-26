@@ -13,6 +13,8 @@ using namespace std;
 
 int emmtChange2File(const map<string, cdc> &EMMt, const string &fpath);
 
+int emmtChange2File(const map<string, vector<c_ectr>> &EMMt, const string &fpath);
+
 int xsetChange2File(const multiset<string>& Xset, const string &fpath);
 
 int tokenChange2File(const tk_filter_token_res& token, const string &fpath);

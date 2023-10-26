@@ -2,7 +2,7 @@
 # example: sh getid.sh 100
 # example: sh getid.sh 100 ../testData/test.txt
 
-g++ get_mm_id_w3.cpp -o getid
+g++ get_mm_id.cpp -o getid
 
 if [ -z "$2" ]; then
   ./getid $1 ../testData/test.txt
