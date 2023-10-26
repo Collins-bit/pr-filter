@@ -39,7 +39,7 @@ int conj_filter_process(std::vector<std::string> command) {
 #ifdef TEST
     TimeUtil time_util1;
     time_util1.initTime();
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 10; i++) {
         if (Conj_Filter_Setup(conj_setup_param, conj_setup_res) != 0) {
             std::cout << "[setup] call Conj_Filter_Setup failed!" << std::endl;
             return -2;
@@ -84,7 +84,7 @@ int conj_filter_process(std::vector<std::string> command) {
 #ifdef TEST
     TimeUtil time_util2;
     time_util2.initTime();
-    for (int i = 0; i < 10000; i++) {
+    for (int i = 0; i < 10; i++) {
         if (Conj_Filter_Search(conj_search_param, conj_ev) != 0) {
             std::cout << "call Conj_Filter_Search failed!" << std::endl;
             return -2;

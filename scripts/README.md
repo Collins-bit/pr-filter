@@ -18,3 +18,9 @@ $ sh randmm.sh
 $ sh getid.sh 100 ../testData/test.txt
 $ sh getmm.sh ../testData/union_MM.txt 1000 ../testData/test.txt
 ```
+
+```asm
+# 统计所有id
+$ sh getid.sh -1 ../testData/test.txt
+```
+

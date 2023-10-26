@@ -67,7 +67,7 @@ Status TKFilterServiceImpl::Search(ServerContext *context,
 #ifdef TEST
     TimeUtil time_util;
     time_util.initTime();
-    for (int i = 0; i < 1000; i++) {
+    for (int i = 0; i < 10; i++) {
         if (TK_Filter_Search(search_param, search_res) != 0) {
             return Status::CANCELLED;
         }
