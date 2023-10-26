@@ -3,8 +3,23 @@
  */
 #include <iostream>
 #include <bits/stdc++.h>
-
 using namespace std;
+
+int find_w12_from_w(string word, string &w1, string &w2) {
+    if (word == "") {
+        w1 = "";
+        w2 = "";
+        return 0;
+    }
+    int idx = word.find("∩");
+    if (idx == -1) {
+        cout << "substr without ∩, wrong msg: " << word << endl;
+        return -1;
+    }
+    w1 = word.substr(0, idx);
+    w2 = word.substr(idx + 3, word.size() - idx);
+    return 0;
+}
 
 void get_MM_from_inverted_file(int num, const std::string &path, std::map<std::string, std::vector<std::string>> &MM) {
     int n = num;

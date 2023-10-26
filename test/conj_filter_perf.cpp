@@ -7,7 +7,7 @@
 using namespace std;
 
 int main() {
-    std::string fpath = "../testData/test_MM.txt";
+    std::string fpath = "../testData/test_10_6.txt";
     int keylen = 32;
     // get mm from txt
     std::map<std::string, std::vector<std::string>> MM;
@@ -29,7 +29,7 @@ int main() {
             return -2;
         }
     }
-    time_util1.endTime("conj setup process", 100);
+    time_util1.endTime("conj setup process", 1);
     emmtChange2File(conj_setup_res.EMMp, "./emmt.txt");
     xsetChange2File(conj_setup_res.X, "./xset.txt");
     std::cout << "setup success!\n" << std::endl;
@@ -59,13 +59,13 @@ int main() {
     std::vector<std::string> conj_ev;
     TimeUtil time_util2;
     time_util2.initTime();
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 10; i++) {
         if (Conj_Filter_Search(conj_search_param, conj_ev) != 0) {
             std::cout << "call Conj_Filter_Search failed!" << std::endl;
             return -2;
         }
     }
-    time_util2.endTime("search process", 10000);
+    time_util2.endTime("search process", 10);
     std::cout << "search success!\n" << std::endl;
 
     // call Conj_Filter_Resolve
