@@ -48,23 +48,23 @@ int main(int argc, char *argv[]) {
     std::map<std::string, std::vector<std::string>> MM;
     get_MM_from_inverted_file(input_fpath, MM);
 
+    multiset<string> check_one;
+
     string last = "";
     for (auto mm: MM) {
         if (num == 0) break;
         string w1, w2;
         find_w12_from_w(mm.first, w1, w2);
-        if (last == "") {
-            last = w1;
-            cout << w1 << " " << w2 << " ";
-        } else {
-            if (last == w1) {
-                cout << w2 << " ";
-            } else {
-                last = w1;
-                cout << w1 << " " << w2 << " ";
-            }
+        if (check_one.find(w1) == check_one.end()) {
+            check_one.insert(w1);
+            cout << w1 << " ";
+            --num;
         }
-        --num;
+        if (check_one.find(w2) == check_one.end()) {
+            check_one.insert(w2);
+            cout << w2 << " ";
+            --num;
+        }
     }
     return 0;
 }
