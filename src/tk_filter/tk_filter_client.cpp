@@ -48,8 +48,9 @@ int TK_Filter_Setup(tk_filter_setup_param &param, tk_filter_setup_res &res) {
             encrypt(res.mk.kp, ctr, ectr);
             // add c_ectr
             first_c_ectr[i] = c_ectr(c, ectr);
+            string hash_c = H(c);
             // add c into X
-            res.emm.X.insert(c);
+            res.emm.X.insert(hash_c);
         }
         MMt[mm.first] = first_c_ectr;
     }
