@@ -21,7 +21,8 @@ int TK_Filter_Search(tk_filter_search_param &param, tk_filter_search_res &res) {
                 cout << "[TK_Filter_Search] call TK_ReEnc failed" << endl;
                 return -1;
             }
-            if (param.emm.X.find(c_next) == param.emm.X.end()) {
+            string hash_c = H(c_next);
+            if (param.emm.X.find(hash_c) == param.emm.X.end()) {
                 flag[l] = false;
                 continue;
             }
