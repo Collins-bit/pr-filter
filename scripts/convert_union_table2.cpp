@@ -22,7 +22,7 @@ int find_w12_from_w(string word, string &w1, string &w2) {
 }
 
 void get_MM_from_inverted_file(int num, const std::string &path, std::map<std::string, std::vector<std::string>> &MM) {
-    int n = num;
+    int n = num, word_num=0;
     std::ifstream MM_myfile(path);
     std::string w, line;
     while (getline(MM_myfile, line)) {
@@ -37,8 +37,10 @@ void get_MM_from_inverted_file(int num, const std::string &path, std::map<std::s
             ids.push_back(out);
         }
         MM[w] = ids;
+        word_num++;
     }
     cout << "convert num: " << num - n << endl;
+    cout << "words num: " << word_num << endl;
 }
 
 void convert_union_file(std::map<std::string, std::vector<std::string>> inverted_MM, const std::string &ofpath) {
