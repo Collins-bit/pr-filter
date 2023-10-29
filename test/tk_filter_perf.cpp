@@ -29,7 +29,7 @@ int main() {
             return -2;
         }
     }
-    time_util1.endTime("conj setup process", 1);
+    time_util1.endTime("tk setup process", 12);
     emmtChange2File(tk_filter_setup_res.emm.EMMt, "./emmt.txt");
     xsetChange2File(tk_filter_setup_res.emm.X, "./xset.txt");
     std::cout << "setup success!\n" << std::endl;
