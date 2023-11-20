@@ -1,6 +1,9 @@
 import logging
 import time
 
+logging.basicConfig(filename='convert.log', level=logging.DEBUG,
+                    format='%(asctime)s %(levelname)s: %(message)s')
+
 def find_w12_from_w(word):
     w1, w2 = word.split("∩")
     return w1, w2
@@ -20,10 +23,10 @@ def get_MM_from_inverted_file(num, path):
             MM[w] = ids
             n -= len(ids)
             word_num += 1
-    logging.info("convert num:", num - n)
-    print("convert num:", num - n)
-    logging.info("words num:", word_num)
-    print("words num:", word_num)
+    logging.info("convert num: {}".format(num - n))
+    print("convert num: {}".format(num - n))
+    logging.info("words num: {}".format(word_num))
+    print("words num: {}".format(word_num))
     return MM
 
 def convert_union_file(inverted_MM, out_fpath):
@@ -41,17 +44,18 @@ def convert_union_file(inverted_MM, out_fpath):
                         f.write(f"{z} ")
                     f.write("\n")
                     sum += 1
-    logging.info("sum:", sum)
+    logging.info("sum: {}".format(sum))
     print("sum:", sum)
 
 if __name__ == "__main__":
     mm_num = int(input("please input word num："))
-    in_fpath = '../../testData/inverted.txt'
-    out_fpath = '../../testData/test_10_6.txt'
+    # mm_num = 10000000
+    in_fpath = '../../testData/inverted_18.txt'
+    out_fpath = '../../testData/test_py_10_7.txt'
     start_time = time.time()
     inverted_MM = get_MM_from_inverted_file(mm_num, in_fpath)
     convert_union_file(inverted_MM, out_fpath)
-    logging.info("time cost: ",  time.time() - start_time, "s")
+    logging.info("time cost: {} s".format(time.time() - start_time))
     print("time cost: ",  time.time() - start_time, "s")
-    logging.info("convert success! (num:", mm_num, ")")
+    logging.info("convert success! (num: {})".format(mm_num))
     print("convert success! (num:", mm_num, ")")
